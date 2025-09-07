@@ -65,8 +65,9 @@ const Projects = () => {
       className={`${styles.projects} ${isVisible ? 'fade-in visible' : 'fade-in'}`}
     >
       <h2 className={styles.sectionTitle}>My Projects</h2>
+      
       <div className={styles.projectsGrid}>
-        {projectsData.map((project, index) => (
+        {projectsData.map((project, index) => (<a href={project.liveUrl} target="_blank" rel="noopener noreferrer" key={index} style={{ textDecoration: 'none', color: 'inherit' }}>
           <div key={index} className={styles.projectCard}>
             <img
               src={project.image}
@@ -103,8 +104,10 @@ const Projects = () => {
               </div>
             </div>
           </div>
+        </a>
         ))}
       </div>
+      
     </section>
   );
 };
