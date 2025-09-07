@@ -1,0 +1,129 @@
+/* src/components/Hero.module.css */
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding: 0 8%;
+  gap: 2rem;
+}
+
+.heroContent {
+  max-width: 600px;
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.name {
+  color: var(--primary-color);
+}
+
+.subtitle {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+/* Typing Animation */
+.typing {
+  color: var(--primary-color);
+  position: relative;
+}
+/* The blinking cursor */
+.typing::after {
+  content: '|';
+  position: absolute;
+  right: -8px;
+  animation: blink 1s infinite;
+}
+
+.description {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  color: #c4c4c4; /* Slightly lighter than pure white */
+}
+
+.ctaButton {
+  display: inline-block;
+  margin-top: 2.5rem;
+  padding: 12px 28px;
+  background: var(--primary-color);
+  border-radius: 8px;
+  color: var(--secondary-color);
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.ctaButton:hover {
+  box-shadow: 0 0 25px var(--primary-color);
+  transform: translateY(-3px);
+}
+
+/* Blob shape and animation */
+.heroImage {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blob {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    var(--primary-color),
+    #3c8ce7
+  );
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: blobFloat 8s infinite ease-in-out;
+}
+
+/* Keyframe Animations */
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@keyframes blobFloat {
+  0% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    transform: translateY(-20px);
+  }
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .title {
+    font-size: 3rem;
+  }
+  .heroImage {
+    display: none; /* Hide the blob on smaller screens to save space */
+  }
+  .hero {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .title {
+    font-size: 2.5rem;
+  }
+  .subtitle {
+    font-size: 1.5rem;
+  }
+}

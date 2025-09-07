@@ -1,0 +1,118 @@
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  padding: 1.2rem 8%;
+  background: rgba(40, 40, 40, 0.6);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo */
+.logo {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+.sub {
+  font-size: 1.2rem;
+  color: var(--text-color);
+  margin-left: 0.3rem;
+  vertical-align: bottom;
+}
+.sub:hover {
+  color: var(--primary-color);
+}
+
+/* Navigation List */
+.navList {
+  list-style: none;
+  display: flex;
+  gap: 2.2rem;
+}
+.navList li a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
+}
+.navList li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 2px;
+  background: var(--primary-color);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+.navList li a:hover {
+  color: var(--primary-color);
+}
+.navList li a:hover::after {
+  transform: scaleX(1);
+}
+
+/* Hamburger Button */
+.menuButton {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1100;
+}
+.menuButton span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: var(--text-color);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.menuButton.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.menuButton.open span:nth-child(2) {
+  opacity: 0;
+}
+.menuButton.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .menuButton {
+    display: flex;
+  }
+  .navList {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: center;
+    background: rgb(40, 40, 40);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+  }
+  .navList.showMenu {
+    max-height: 300px;
+    padding: 1.5rem 0;
+  }
+}

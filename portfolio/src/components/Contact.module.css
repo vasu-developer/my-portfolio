@@ -1,0 +1,91 @@
+/* src/components/Contact.module.css */
+.contact {
+  padding: 6rem 8%;
+  background-color: var(--secondary-color);
+  text-align: center;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -10px;
+  width: 80px;
+  height: 4px;
+  background: var(--primary-color);
+  border-radius: 2px;
+}
+
+.subtitle {
+  max-width: 600px;
+  margin: 2rem auto 3rem;
+  font-size: 1.1rem;
+  color: #dcdcdc;
+}
+
+.form {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.inputGroup {
+  margin-bottom: 1.5rem;
+}
+
+.inputGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #f0f0f0;
+}
+
+.inputGroup input,
+.inputGroup textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background-color: var(--background-color);
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inputGroup input:focus,
+.inputGroup textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px rgba(97, 218, 251, 0.3);
+}
+
+.submitButton {
+  display: inline-block;
+  padding: 12px 28px;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 8px;
+  color: var(--secondary-color);
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.submitButton:hover {
+  box-shadow: 0 0 25px var(--primary-color);
+  transform: translateY(-3px);
+}
+
+.formStatus {
+  margin-top: 1.5rem;
+  font-weight: 500;
+}

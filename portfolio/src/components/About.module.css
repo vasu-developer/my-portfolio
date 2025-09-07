@@ -1,0 +1,84 @@
+/* src/components/About.module.css */
+
+.about {
+  padding: 6rem 8%;
+  background-color: var(--secondary-color); /* A slightly different background */
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+/* Underline for the section title */
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -10px;
+  width: 80px;
+  height: 4px;
+  background: var(--primary-color);
+  border-radius: 2px;
+}
+
+.aboutContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+}
+
+.imageContainer {
+  flex-basis: 35%; /* The image container will take 35% of the width */
+}
+
+.profileImage {
+  width: 100%;
+  border-radius: 50%;
+  border: 5px solid var(--primary-color);
+  box-shadow: 0 0 25px rgba(97, 218, 251, 0.5);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.profileImage:hover {
+  transform: scale(1.05) rotate(2deg);
+  box-shadow: 0 0 40px rgba(97, 218, 251, 0.7);
+}
+
+.textContainer {
+  flex-basis: 60%; /* The text container will take 60% of the width */
+}
+
+.textContainer p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  color: #dcdcdc;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .aboutContent {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .imageContainer {
+    width: 280px; /* Fixed size for the image on smaller screens */
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .textContainer p {
+    font-size: 1rem;
+  }
+}
