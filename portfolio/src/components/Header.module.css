@@ -22,7 +22,8 @@
   text-decoration: none;
 }
 .sub {
-  font-size: 1.2rem;
+  font-size: 1.0rem;
+  font-weight: 600;
   color: var(--text-color);
   margin-left: 0.3rem;
   vertical-align: bottom;
