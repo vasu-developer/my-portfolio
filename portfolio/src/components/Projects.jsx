@@ -6,6 +6,7 @@ import styles from './Projects.module.css';
 // Import project images
 import project1Image from '../assets/images/project1.png';
 import project2Image from '../assets/images/project2.png';
+import project3 from '../assets/images/project3.png';
 
 // Import icons
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
@@ -29,6 +30,22 @@ const projectsData = [
     liveUrl: 'https://vistavibes.vercel.app',
     githubUrl: 'https://github.com/vasu-developer/vistavibes', // Replace with your repo
   },
+  {
+    title: 'Face Mask Detection',
+    description:'A real-time face mask detection system using deep learning techniques. The project utilizes a convolutional neural network (CNN) to accurately identify whether individuals are wearing masks in live video feeds, helping to promote public health and safety.',
+    image: 'https://miro.medium.com/v2/resize:fit:1400/1*oX3bYkYk7f9b8j4rX6m1cw.png',
+    tags: ['Python', 'TensorFlow', 'OpenCV', 'Deep Learning'],
+    liveUrl: 'https://ai-ml-projects.onrender.com/',
+    githubUrl: 'https://github.com/vasu-developer/AI-ML-PROJECTS/tree/main/face-mask-detection'
+  },
+  {
+    title: 'Email Spam Classifier',
+    description:'An email spam classifier that uses machine learning algorithms to categorize emails as spam or not spam. The project involves data preprocessing, feature extraction, and model training to achieve high accuracy in spam detection.',
+    image: project3,
+    tags: ['Python', 'Scikit-learn', 'Natural Language Processing'],
+    liveUrl: 'https://spam-email-classifier-ai.onrender.com/',
+    githubUrl: 'https://github.com/vasu-developer/AI-ML-PROJECTS/tree/main/Spam%20Email%20Classifier'
+  }
 ];
 
 const Projects = () => {

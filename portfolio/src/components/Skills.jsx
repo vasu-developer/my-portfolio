@@ -12,7 +12,7 @@ import {
   FaBootstrap,
   FaPython
 } from 'react-icons/fa';
-import { SiMongodb, SiExpress, SiPostman, SiJsonwebtokens, SiMysql } from 'react-icons/si';
+import { SiMongodb, SiExpress, SiPostman, SiJsonwebtokens, SiMysql, SiCnn, SiKeras, SiTensorflow } from 'react-icons/si';
 
 // Define your skills in an array of objects
 const skills = [
@@ -29,7 +29,8 @@ const skills = [
   { name: 'MySQL', icon: <SiMysql />, color: '#3866eeff' },
   { name: 'Java', icon: <FaJava />, color: '#ff5237ff' },
   { name: 'Bootstrap', icon: <FaBootstrap />, color: '#373effff' },
-  {name:'Python', icon: <FaPython />, color: '#022061ff' }
+  {name:'Python', icon: <FaPython />, color: '#022061ff' },
+  {name: 'TenserFlow', icon: <SiTensorflow />, color: '#FF6F00' }
 ];
 
 const Skills = () => {
