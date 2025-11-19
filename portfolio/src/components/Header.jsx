@@ -19,7 +19,11 @@ const Header = () => {
       behavior: "smooth",
     });
 
-    setMenuOpen(false); // Close menu after click
+    setMenuOpen(false);
+  };
+
+  const triggerAnimation = (section) => {
+    window.dispatchEvent(new Event(`trigger-${section}-animation`));
   };
 
   return (
@@ -43,22 +47,49 @@ const Header = () => {
         {/* Navigation List */}
         <ul className={`${styles.navList} ${menuOpen ? styles.showMenu : ""}`}>
           <li>
-            <a href="#about" onClick={(e) => handleNavClick(e, "about")}>
+            <a
+              href="#about"
+              onClick={(e) => {
+                handleNavClick(e, "about");
+                triggerAnimation("about");
+              }}
+            >
               About
             </a>
           </li>
+
           <li>
-            <a href="#skills" onClick={(e) => handleNavClick(e, "skills")}>
+            <a
+              href="#skills"
+              onClick={(e) => {
+                handleNavClick(e, "skills");
+                triggerAnimation("skills");
+              }}
+            >
               Skills
             </a>
           </li>
+
           <li>
-            <a href="#projects" onClick={(e) => handleNavClick(e, "projects")}>
+            <a
+              href="#projects"
+              onClick={(e) => {
+                handleNavClick(e, "projects");
+                triggerAnimation("projects");
+              }}
+            >
               Projects
             </a>
           </li>
+
           <li>
-            <a href="#contact" onClick={(e) => handleNavClick(e, "contact")}>
+            <a
+              href="#contact"
+              onClick={(e) => {
+                handleNavClick(e, "contact");
+                triggerAnimation("contact");
+              }}
+            >
               Contact
             </a>
           </li>

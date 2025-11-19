@@ -1,56 +1,97 @@
 // src/components/About.jsx
 
-import React, { useEffect, useRef, useState } from 'react';
-import styles from './About.module.css';
-import profileImage from '../assets/images/profile.jpg'; // Make sure you have this image
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./About.module.css";
+import profileImage from "../assets/images/profile.jpg";
 
 const About = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
   const aboutRef = useRef(null);
 
+  /* ------------------ SCROLL TRIGGER ------------------ */
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // entries is an array of observed elements
-        const entry = entries[0];
+    const ob = new IntersectionObserver(
+      ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target); // Stop observing after it's visible
+          setVisible(true);
         }
       },
-      {
-        threshold: 0.1, // Trigger when 10% of the element is visible
-      }
+      { threshold: 0.2 }
     );
 
-    if (aboutRef.current) {
-      observer.observe(aboutRef.current);
-    }
+    if (aboutRef.current) ob.observe(aboutRef.current);
 
-    // Cleanup observer on component unmount
-    return () => {
-      if (aboutRef.current) {
-        observer.unobserve(aboutRef.current);
-      }
+    return () => ob.disconnect();
+  }, []);
+
+  /* ------------------ NAVBAR CLICK TRIGGER ------------------ */
+  useEffect(() => {
+    const replay = () => {
+      setVisible(false);
+
+      // Allow DOM to reset before replaying animation
+      setTimeout(() => setVisible(true), 50);
     };
-  }, []); // Empty dependency array ensures this runs only once
+
+    window.addEventListener("trigger-about-animation", replay);
+
+    return () => {
+      window.removeEventListener("trigger-about-animation", replay);
+    };
+  }, []);
 
   return (
-    <section id="about" ref={aboutRef} className={`${styles.about} ${isVisible ? 'fade-in visible' : 'fade-in'}`}>
+    <section
+      id="about"
+      ref={aboutRef}
+      className={`${styles.aboutSection} ${visible ? styles.visible : ""}`}
+    >
+      {/* Cosmic backdrop */}
+      <div className={styles.nebulaGlow}></div>
+      <div className={styles.particleFog}></div>
+
       <h2 className={styles.sectionTitle}>About Me</h2>
-      <div className={styles.aboutContent}>
-        <div className={styles.imageContainer}>
-          <img src={profileImage} alt="My Profile" className={styles.profileImage} />
+
+      <div className={styles.container}>
+        {/* Image + cosmic elements */}
+        <div className={styles.imageWrapper}>
+          <div className={styles.darkMatterRipple}></div>
+
+          <img
+            src={profileImage}
+            alt="Profile"
+            className={styles.profileImage}
+          />
+
+          {/* Floating neutron star shard */}
+          <div className={styles.neutronShard}></div>
         </div>
-        <div className={styles.textContainer}>
+
+        {/* Text */}
+        <div className={styles.textBlock}>
           <p>
-            Hello! I'm a passionate Full Stack Developer with a knack for creating dynamic and user-friendly web applications. My journey into the world of code began with a fascination for how ideas can be transformed into tangible, interactive experiences.
+            I'm a developer who blends logic with imagination — crafting digital
+            experiences that feel both engineered and alive. My fascination with
+            how the universe works drives the way I build software: structured,
+            curious, and always evolving.
           </p>
+
           <p>
-            I specialize in the MERN stack (MongoDB, Express.js, React, Node.js) but I'm always eager to learn new technologies. I thrive on solving complex problems and am committed to writing clean, efficient, and maintainable code.
+            I specialize in the MERN stack, but I’m endlessly drawn to the deeper
+            layers of how things work — from scalable architectures to the hidden
+            beauty of elegant code.
           </p>
+
           <p>
-            When I'm not coding, you can find me exploring the latest tech trends, contributing to open-source projects, or enjoying a good cup of coffee.
+            Outside the lines of code, I find myself reading ancient epic tales,
+            exploring the mysteries of the cosmos, and diving into the poetry of
+            physics — where every equation feels like a story written by nature
+            itself.
+          </p>
+
+          <p>
+            These curiosities shape the way I build: with patience, precision,
+            and a bit of cosmic wonder.
           </p>
         </div>
       </div>

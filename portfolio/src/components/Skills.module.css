@@ -1,75 +1,167 @@
-/* src/components/Skills.module.css */
+/* ---------------------- Cosmic Background ----------------------- */
 
-.skills {
-  padding: 6rem 8%;
+.skillsSection {
+  position: relative;
+  padding: 7rem 8%;
+  color: #f3f3f6;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 1.1s ease;
 }
+
+.visible {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+/* Nebula glow */
+.bgNebula {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      800px 600px at 20% 20%,
+      rgba(150, 90, 255, 0.25),
+      transparent
+    ),
+    radial-gradient(
+      900px 800px at 80% 80%,
+      rgba(255, 120, 80, 0.18),
+      transparent
+    );
+  filter: blur(30px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Drifting stars layer */
+.bgStars {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+      rgba(255, 255, 255, 0.2) 1px,
+      transparent 1px
+    ),
+    radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+  background-size: 40px 40px, 60px 60px;
+  animation: starDrift 50s linear infinite;
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes starDrift {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: -800px -600px, -400px -200px; }
+}
+
+/* --------------------- Section Title ---------------------- */
 
 .sectionTitle {
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin-bottom: 4rem;
   position: relative;
+  z-index: 5;
+  text-shadow: 0 0 15px rgba(255, 200, 140, 0.25);
 }
 
 .sectionTitle::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 50%;
+  bottom: -12px;
   transform: translateX(-50%);
-  bottom: -10px;
-  width: 80px;
+  width: 120px;
   height: 4px;
-  background: var(--primary-color);
-  border-radius: 2px;
+  background: linear-gradient(90deg, #ffd8ac, #ffb778);
+  border-radius: 50px;
+  box-shadow: 0 0 10px rgba(255, 180, 100, 0.45);
 }
+
+/* --------------------- Skill Grid ---------------------- */
 
 .skillsGrid {
   display: grid;
-  /* This creates a responsive grid that fits as many items as possible */
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 2rem;
-  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 2.5rem;
+  z-index: 5;
+  position: relative;
 }
 
-.skillCard {
+/* --------------------- Cosmic Orbs ---------------------- */
+
+.skillOrb {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  background: rgba(15, 15, 22, 0.45);
+  border-radius: 22px;
+  border: 1px solid rgba(255, 200, 150, 0.08);
+  box-shadow:
+    0 0 20px rgba(255, 150, 90, 0.08),
+    inset 0 0 18px rgba(255, 200, 120, 0.06);
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
-  background-color: var(--secondary-color);
-  border-radius: 10px;
-  width: 100%;
-  max-width: 150px;
-  aspect-ratio: 1/1; /* Makes the card a square */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid #333;
+
+  backdrop-filter: blur(10px);
+  transition: 0.5s ease;
+  cursor: pointer;
+
+  transform-style: preserve-3d;
 }
 
-.skillCard:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  border-color: var(--primary-color);
+/* Orb rotation animation */
+.skillOrb:hover {
+  transform: translateY(-15px) rotate3d(1, 1, 0, 15deg);
+  box-shadow:
+    0 0 30px rgba(255, 180, 90, 0.4),
+    0 0 60px rgba(130, 90, 255, 0.25),
+    inset 0 0 25px rgba(255, 200, 120, 0.2);
+  border-color: rgba(255, 190, 140, 0.35);
 }
 
-.iconWrapper {
-  font-size: 4rem; /* Icon size */
+/* Orb Core: Floating Crystal */
+.orbCore {
+  font-size: 3.8rem;
+  transition: 0.4s ease;
+  transform: translateZ(25px);
+  filter: drop-shadow(0 0 15px rgba(255, 200, 150, 0.25));
 }
 
-.skillCard p {
-  font-size: 1.1rem;
-  font-weight: 500;
+.skillOrb:hover .orbCore {
+  transform: translateZ(38px) scale(1.15);
+  filter: drop-shadow(0 0 25px rgba(255, 180, 100, 0.55));
 }
 
-/* Responsive Design */
+/* Text below orb */
+.skillName {
+  margin-top: 1rem;
+  font-size: 1.08rem;
+  text-shadow: 0 0 6px rgba(255, 200, 150, 0.25);
+}
+
+/* --------------------- Responsive ---------------------- */
+
 @media (max-width: 576px) {
   .sectionTitle {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 
   .skillsGrid {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 1.7rem;
+  }
+
+  .skillOrb {
+    width: 120px;
+    height: 120px;
+  }
+
+  .orbCore {
+    font-size: 3rem;
   }
 }

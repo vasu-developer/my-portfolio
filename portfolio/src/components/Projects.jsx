@@ -1,130 +1,152 @@
 // src/components/Projects.jsx
 
-import React, { useEffect, useRef, useState } from 'react';
-import styles from './Projects.module.css';
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./Projects.module.css";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
-// Import project images
-import project1Image from '../assets/images/project1.png';
-import project2Image from '../assets/images/project2.png';
-import project3 from '../assets/images/project3.png';
-
-// Import icons
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import project1Image from "../assets/images/project1.png";
+import project2Image from "../assets/images/project2.png";
+import project3 from "../assets/images/project3.png";
 
 const projectsData = [
   {
-    title: 'Desi Krishak',
+    title: "Desi Krishak",
     description:
-      'Desi Krishak is a full-stack e-commerce platform that empowers local farmers by directly connecting them with consumers. It eliminates middlemen, ensures fair pricing, and promotes sustainable agriculture. The platform features secure authentication, product management, cart & checkout system, and a smooth user experience.',
+      "Desi Krishak is a full-stack e-commerce platform connecting local farmers directly with consumers.",
     image: project1Image,
-    tags: ['React', 'Node.js', 'Express', 'MongoDB','JWT', 'CSS Modules', 'Responsive Design'],
-    liveUrl: 'https://desi-krishak-81xa.vercel.app',
-    githubUrl: 'https://github.com/vasu-developer/desi-krishak', // Replace with your repo
+    tags: ["React", "Node.js", "MongoDB", "JWT"],
+    liveUrl: "https://desi-krishak-81xa.vercel.app",
+    githubUrl: "https://github.com/vasu-developer/desi-krishak",
   },
   {
-    title: 'VistaVibes',
+    title: "VistaVibes",
     description:
-      'VistaVibes is an one-stop platform for discovering and sharing high-definition wallpapers across various categories. Whether youre a photographer, a designer, or just someone who appreciates beautiful visuals, VistaVibes offers a vibrant community to showcase your creativity.',
+      "A platform for discovering and sharing HD wallpapers. A creative hub for artists.",
     image: project2Image,
-    tags: ['React', 'Firebase', 'CSS Modules','MongoDB','JWT', 'Responsive Design'],
-    liveUrl: 'https://vistavibes.vercel.app',
-    githubUrl: 'https://github.com/vasu-developer/vistavibes', // Replace with your repo
+    tags: ["React", "Firebase", "JWT"],
+    liveUrl: "https://vistavibes.vercel.app",
+    githubUrl: "https://github.com/vasu-developer/vistavibes",
   },
   {
-    title: 'Face Mask Detection',
-    description:'A real-time face mask detection system using deep learning techniques. The project utilizes a convolutional neural network (CNN) to accurately identify whether individuals are wearing masks in live video feeds, helping to promote public health and safety.',
-    image: 'https://miro.medium.com/v2/resize:fit:1400/1*oX3bYkYk7f9b8j4rX6m1cw.png',
-    tags: ['Python', 'TensorFlow', 'OpenCV', 'Deep Learning'],
-    liveUrl: 'https://ai-ml-projects.onrender.com/',
-    githubUrl: 'https://github.com/vasu-developer/AI-ML-PROJECTS/tree/main/face-mask-detection'
+    title: "Face Mask Detection",
+    description:
+      "A real-time mask detection system using deep learning (CNN + TensorFlow).",
+    image:
+      "https://miro.medium.com/v2/resize:fit:1400/1*oX3bYkYk7f9b8j4rX6m1cw.png",
+    tags: ["Python", "TensorFlow", "OpenCV"],
+    liveUrl: "https://ai-ml-projects.onrender.com/",
+    githubUrl:
+      "https://github.com/vasu-developer/AI-ML-PROJECTS/tree/main/face-mask-detection",
   },
   {
-    title: 'Email Spam Classifier',
-    description:'An email spam classifier that uses machine learning algorithms to categorize emails as spam or not spam. The project involves data preprocessing, feature extraction, and model training to achieve high accuracy in spam detection.',
+    title: "Email Spam Classifier",
+    description: "An NLP-powered spam email classifier.",
     image: project3,
-    tags: ['Python', 'Scikit-learn', 'Natural Language Processing'],
-    liveUrl: 'https://spam-email-classifier-ai.onrender.com/',
-    githubUrl: 'https://github.com/vasu-developer/AI-ML-PROJECTS/tree/main/Spam%20Email%20Classifier'
-  }
+    tags: ["Python", "NLP", "Scikit-learn"],
+    liveUrl: "https://spam-email-classifier-ai.onrender.com/",
+    githubUrl:
+      "https://github.com/vasu-developer/AI-ML-PROJECTS/tree/main/Spam%20Email%20Classifier",
+  },
 ];
 
 const Projects = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const projectsRef = useRef(null);
+  const [visible, setVisible] = useState(false);
+  const sectionRef = useRef(null);
 
+  /* -------------- SCROLL OBSERVER -------------- */
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
+    const ob = new IntersectionObserver(
+      ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
+          setVisible(true);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.2 }
     );
 
-    if (projectsRef.current) {
-      observer.observe(projectsRef.current);
-    }
+    if (sectionRef.current) ob.observe(sectionRef.current);
 
-    return () => {
-      if (projectsRef.current) {
-        observer.unobserve(projectsRef.current);
-      }
+    return () => ob.disconnect();
+  }, []);
+
+  /* -------------- NAVBAR TRIGGER LISTENER -------------- */
+  useEffect(() => {
+    const trigger = () => {
+      // replay animation cleanly
+      setVisible(false);
+
+      // allow DOM to reset
+      setTimeout(() => setVisible(true), 50);
     };
+
+    window.addEventListener("trigger-projects-animation", trigger);
+
+    return () =>
+      window.removeEventListener("trigger-projects-animation", trigger);
   }, []);
 
   return (
     <section
       id="projects"
-      ref={projectsRef}
-      className={`${styles.projects} ${isVisible ? 'fade-in visible' : 'fade-in'}`}
+      ref={sectionRef}
+      className={`${styles.projectsSection} ${visible ? styles.visible : ""}`}
     >
+      <div className={styles.shootingStars}></div>
+
       <h2 className={styles.sectionTitle}>My Projects</h2>
-      
-      <div className={styles.projectsGrid}>
-        {projectsData.map((project, index) => (<a href={project.liveUrl} target="_blank" rel="noopener noreferrer" key={index} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div key={index} className={styles.projectCard}>
-            <img
-              src={project.image}
-              alt={`${project.title} screenshot`}
-              className={styles.projectImage}
-            />
-            <div className={styles.projectContent}>
-              <h3 className={styles.projectTitle}>{project.title}</h3>
-              <p className={styles.projectDescription}>{project.description}</p>
-              <div className={styles.projectTags}>
-                {project.tags.map((tag, tagIndex) => (
-                  <span key={tagIndex} className={styles.tag}>
-                    {tag}
-                  </span>
-                ))}
+
+      <div className={styles.grid}>
+        {projectsData.map((project, i) => (
+          <a
+            href={project.liveUrl}
+            key={i}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.cardLink}
+          >
+            <div
+              className={`${styles.vortexCard}
+                ${visible ? styles.vortexVisible : ""}
+                ${i % 2 === 0 ? styles.fadeFromLeft : styles.fadeFromRight}
+              `}
+              style={{ transitionDelay: `${i * 120}ms` }}
+            >
+              <div className={styles.vortexGlow}></div>
+
+              <div className={styles.vortexCore}>
+                <img
+                  loading="lazy"
+                  src={project.image}
+                  alt={project.title}
+                  className={styles.projectImage}
+                />
               </div>
-              <div className={styles.projectLinks}>
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.link}
-                >
-                  <FaExternalLinkAlt /> Live Demo
-                </a>
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.link}
-                >
-                  <FaGithub /> View Code
-                </a>
+
+              <div className={styles.content}>
+                <h3 className={styles.title}>{project.title}</h3>
+                <p className={styles.desc}>{project.description}</p>
+
+                <div className={styles.tags}>
+                  {project.tags.map((tag, idx) => (
+                    <span key={idx} className={styles.tag}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <div className={styles.links}>
+                  <a href={project.liveUrl} className={styles.link}>
+                    <FaExternalLinkAlt /> Live
+                  </a>
+                  <a href={project.githubUrl} className={styles.link}>
+                    <FaGithub /> Code
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-        </a>
+          </a>
         ))}
       </div>
-      
     </section>
   );
 };

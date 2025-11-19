@@ -1,30 +1,106 @@
 /* src/components/Footer.module.css */
+
+:root {
+  --cosmic-text: #e8e7f5;
+  --cosmic-soft: #cfcfe8;
+  --glow: rgba(255, 180, 120, 0.35);
+}
+
+/* ---------------- FOOTER ---------------- */
 .footer {
-  padding: 2rem 8%;
-  background-color: var(--background-color);
+  position: relative;
+  width: 100%;
+  padding: 4rem 6% 2.5rem;
+  color: var(--cosmic-text);
   text-align: center;
-  border-top: 1px solid #333;
+  
+
+  /* Background image */
+   background-image: url("/footer-bg-image.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center -800px;
+
+  /* Smooth reveal */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 1s ease;
 }
 
-.socialLinks {
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* dark gradient overlay from top to improve readability */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 10, 0.65),
+    rgba(0, 0, 0, 0.2)
+  );
+  pointer-events: none;
+}
+
+/* ---------------- SOCIAL ICONS ---------------- */
+.socialBlock {
+  position: relative;
   display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
+  flex-direction: row;
+  gap: 1.4rem;
+
+  /* Positioned on right side near UFO */
+  align-items: flex-end;
+  margin-top: 1rem;
+  z-index: 5;
+  margin: auto;
 }
 
-.socialLinks a {
-  color: var(--text-color);
-  font-size: 1.8rem;
-  transition: color 0.3s ease, transform 0.3s ease;
+.icon {
+  font-size: 2.2rem;
+  color: var(--cosmic-text);
+  padding: 8px;
+  border-radius: 50%;
+  transition: 0.25s ease;
 }
 
-.socialLinks a:hover {
-  color: var(--primary-color);
-  transform: translateY(-5px);
+.icon:hover {
+  color: #ffd8b0;
+  text-shadow: 0 0 14px var(--glow);
+  transform: translateY(-3px);
 }
 
-.copyright {
-  font-size: 0.9rem;
-  color: #aaa;
-} 
+/* ---------------- COPYRIGHT ---------------- */
+.copy {
+  margin-top: 2.5rem;
+  font-size: 0.95rem;
+  color: var(--cosmic-soft);
+  letter-spacing: 0.3px;
+  position: relative;
+  z-index: 5;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 768px) {
+  .socialBlock {
+    align-items: center;
+    margin-right: 0;
+    margin-top: 3rem;
+    background: none;
+  }
+  .icon {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .footer {
+   background: none;
+  }
+  
+  .copy {
+    font-size: 0.85rem;
+  }
+}

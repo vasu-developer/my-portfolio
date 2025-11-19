@@ -1,101 +1,144 @@
 // src/components/Contact.jsx
 
-import React, { useState } from 'react';
-import styles from './Contact.module.css';
+import React, { useState, useEffect, useRef } from "react";
+import styles from "./Contact.module.css";
 
 const Contact = () => {
-  // IMPORTANT: Replace with your own access key from web3forms.com
-  const ACCESS_KEY = '210faed1-d647-4d18-aba5-eed140455076';
+  const ACCESS_KEY = "210faed1-d647-4d18-aba5-eed140455076";
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
+    name: "",
+    email: "",
+    message: "",
   });
 
   const [result, setResult] = useState(null);
+  const [visible, setVisible] = useState(false);
+  const sectionRef = useRef(null);
 
+  /* ---------------- SCROLL TRIGGER ---------------- */
+  useEffect(() => {
+    const ob = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          ob.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) ob.observe(sectionRef.current);
+
+    return () => ob.disconnect();
+  }, []);
+
+  /* ---------------- NAVBAR CLICK TRIGGER ---------------- */
+  useEffect(() => {
+    const replay = () => {
+      setVisible(false);
+      setTimeout(() => setVisible(true), 40); // reset + replay
+    };
+
+    window.addEventListener("trigger-contact-animation", replay);
+    return () =>
+      window.removeEventListener("trigger-contact-animation", replay);
+  }, []);
+
+  /* ---------------- HANDLERS ---------------- */
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setResult('Sending....');
+    setResult("Sending...");
+
     const data = new FormData(e.target);
 
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
         body: data,
       });
 
-      const json = await response.json();
+      const json = await res.json();
+
       if (json.success) {
-        setResult('Form Submitted Successfully!');
-        e.target.reset(); // Reset form fields
-        setFormData({ name: '', email: '', message: '' });
+        setResult("Message sent successfully ✨");
+        e.target.reset();
+        setFormData({ name: "", email: "", message: "" });
       } else {
-        console.log('Error from Web3Forms', json);
-        setResult(json.message);
+        setResult(json.message || "Something went wrong.");
       }
     } catch (error) {
-      console.log('Fetch Error', error);
-      setResult('Something went wrong!');
+      setResult("Network error. Try again.");
     }
   };
 
-
   return (
-    <section id="contact" className={styles.contact}>
+    <section
+      id="contact"
+      ref={sectionRef}
+      className={`${styles.contactSection} ${
+        visible ? styles.visible : ""
+      }`}
+    >
+      {/* Nebula + Glow layers */}
+      <div className={styles.nebulaGlow}></div>
+      <div className={styles.subtleFog}></div>
+
       <h2 className={styles.sectionTitle}>Get In Touch</h2>
       <p className={styles.subtitle}>
-        Have a question or want to work together? Leave your details and I'll get back to you as soon as possible.
+        Whether it’s a question, collaboration, or a spark of an idea —
+        I’d love to hear from you.
       </p>
+
       <form onSubmit={handleSubmit} className={styles.form}>
         <input type="hidden" name="access_key" value={ACCESS_KEY} />
-        
+
         <div className={styles.inputGroup}>
           <label htmlFor="name">Full Name</label>
-          <input 
-            type="text" 
-            id="name" 
-            name="name" 
+          <input
+            name="name"
+            id="name"
+            type="text"
+            required
             value={formData.name}
             onChange={handleChange}
-            required 
           />
         </div>
-        
+
         <div className={styles.inputGroup}>
           <label htmlFor="email">Email Address</label>
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
+          <input
+            name="email"
+            id="email"
+            type="email"
+            required
             value={formData.email}
             onChange={handleChange}
-            required 
           />
         </div>
-        
+
         <div className={styles.inputGroup}>
           <label htmlFor="message">Message</label>
-          <textarea 
-            id="message" 
-            name="message" 
+          <textarea
+            name="message"
+            id="message"
             rows="5"
+            required
             value={formData.message}
             onChange={handleChange}
-            required
-          ></textarea>
+          />
         </div>
-        
-        <button type="submit" className={styles.submitButton}>Send Message</button>
+
+        <button type="submit" className={styles.sendButton}>
+          <span>Send Message</span>
+          <div className={styles.comet}></div>
+        </button>
       </form>
+
       {result && <p className={styles.formStatus}>{result}</p>}
     </section>
   );
