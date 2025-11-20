@@ -29,7 +29,7 @@
 }
 
 /* Nebula background */
-.nebulaGlow {
+/* .nebulaGlow {
   position: absolute;
   inset: 0;
   background: radial-gradient(
@@ -51,10 +51,10 @@
   opacity: 0.7;
   pointer-events: none;
   z-index: 0;
-}
+} */
 
 /* Particle Fog */
-.particleFog {
+/* .particleFog {
   position: absolute;
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg width='300' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='150' cy='150' r='1' fill='white' opacity='0.16'/%3E%3C/svg%3E");
@@ -62,12 +62,12 @@
   opacity: 0.15;
   animation: drift 38s linear infinite;
   z-index: 0;
-}
+} */
 
-@keyframes drift {
+/* @keyframes drift {
   0% { transform: translate(0px, 0px); }
   100% { transform: translate(-300px, -200px); }
-}
+} */
 
 /* --------------------- SECTION TITLE ---------------------- */
 

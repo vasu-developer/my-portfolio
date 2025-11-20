@@ -1,8 +1,5 @@
-// src/components/Footer.jsx
-
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./Footer.module.css";
-
 import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 
 const Footer = () => {
@@ -31,7 +28,7 @@ const Footer = () => {
     >
       <div className={styles.overlay} />
 
-      {/* Social links on the right, aligned near UFO */}
+      {/* Social links */}
       <div className={styles.socialBlock}>
         <a
           href="https://github.com/vasu-developer"

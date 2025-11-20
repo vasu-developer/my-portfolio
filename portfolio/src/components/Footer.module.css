@@ -1,5 +1,3 @@
-/* src/components/Footer.module.css */
-
 :root {
   --cosmic-text: #e8e7f5;
   --cosmic-soft: #cfcfe8;
@@ -8,23 +6,30 @@
 
 /* ---------------- FOOTER ---------------- */
 .footer {
-  position: relative;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  top: auto;
+  
   width: 100%;
-  padding: 4rem 6% 2.5rem;
+  z-index: 9999; /* Very high z-index to ensure it is always visible */
+  padding: 4rem 0% 2.5rem; /* Adjusted padding to accommodate fixed position */
   color: var(--cosmic-text);
   text-align: center;
   
-
   /* Background image */
-   background-image: url("/footer-bg-image.png");
+  background-image: url("/footer-bg-image.png");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center -800px;
+  
+  /* Positions the planet graphic relative to the bottom */
+  background-position: center bottom;
 
   /* Smooth reveal */
   opacity: 0;
   transform: translateY(40px);
   transition: 1s ease;
+  overflow:visible;
 }
 
 .visible {
@@ -32,17 +37,18 @@
   transform: translateY(0);
 }
 
-/* dark gradient overlay from top to improve readability */
-.overlay {
+/* Dark gradient overlay for readability and depth */
+/* .overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 10, 0.65),
-    rgba(0, 0, 0, 0.2)
+    rgba(0, 0, 10, 0.95),
+    rgba(0, 0, 0, 0.4)
   );
   pointer-events: none;
-}
+  z-index: 1;
+} */
 
 /* ---------------- SOCIAL ICONS ---------------- */
 .socialBlock {
@@ -50,12 +56,14 @@
   display: flex;
   flex-direction: row;
   gap: 1.4rem;
-
-  /* Positioned on right side near UFO */
+  float: right;
   align-items: flex-end;
-  margin-top: 1rem;
+  margin-top: 2rem;
   z-index: 5;
   margin: auto;
+  justify-content: center;
+  bottom: -50px;
+  right: 30px;
 }
 
 .icon {
@@ -74,16 +82,20 @@
 
 /* ---------------- COPYRIGHT ---------------- */
 .copy {
-  margin-top: 2.5rem;
+  margin-top: 3.5rem;
   font-size: 0.95rem;
   color: var(--cosmic-soft);
   letter-spacing: 0.3px;
   position: relative;
   z-index: 5;
+  bottom: -30px;
 }
 
 /* ---------------- RESPONSIVE ---------------- */
 @media (max-width: 768px) {
+  .footer {
+    padding: 15rem 0% 2.5rem;
+  }
   .socialBlock {
     align-items: center;
     margin-right: 0;
@@ -97,7 +109,8 @@
 
 @media (max-width: 500px) {
   .footer {
-   background: none;
+    margin-top: -100px; /* Smaller overlap on mobile */
+    padding: 12rem 0% 2rem;
   }
   
   .copy {

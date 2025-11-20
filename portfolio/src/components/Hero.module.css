@@ -62,12 +62,12 @@
   /* soft cosmic glow */
   filter: drop-shadow(0 0 4px rgba(255,255,255,0.25));
 
-  animation: twinkleOpacity 1s ease-in-out infinite ;
+  animation: twinkleOpacity 100ms ease-in-out infinite ;
 }
 
 /* OPACITY ONLY — cannot be broken by transform changes */
 @keyframes twinkleOpacity {
-  0%   { opacity: 0; }
+  0%   { opacity: 0.45; }
   50%  { opacity: 1; }
   100% { opacity: 0.45; }
 }

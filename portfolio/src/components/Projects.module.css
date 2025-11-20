@@ -176,7 +176,7 @@
 }
 
 .vortexCard:hover .projectImage {
-  transform: scale(1.45) rotate(-6deg);
+  transform: scale(1) rotate(-2deg);
   opacity: 0.75;
 }
 
