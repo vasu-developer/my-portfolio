@@ -1,69 +1,57 @@
-/* ---------------------- Cosmic Background ----------------------- */
+/* ---------------------- ROOT THEME ----------------------- */
+:root {
+  --skill-text: #f3f3f6;
+  --gold-glow: rgba(255, 180, 100, 0.45);
+  --violet-glow: rgba(130, 90, 255, 0.3);
+}
 
+/* ---------------------- SECTION ----------------------- */
 .skillsSection {
   position: relative;
   padding: 7rem 8%;
-  color: #f3f3f6;
+  color: var(--skill-text);
   overflow: hidden;
+
   opacity: 0;
   transform: translateY(40px);
-  transition: 1.1s ease;
+  transition: opacity 1.1s ease, transform 1.1s ease;
+
+  background: #00040d;
+  isolation: isolate;
 }
 
 .visible {
   opacity: 1;
-  transform: translateY(0px);
+  transform: translateY(0);
 }
 
-/* Nebula glow */
-/* .bgNebula {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-      800px 600px at 20% 20%,
-      rgba(150, 90, 255, 0.25),
-      transparent
-    ),
-    radial-gradient(
-      900px 800px at 80% 80%,
-      rgba(255, 120, 80, 0.18),
-      transparent
-    );
-  filter: blur(30px);
-  pointer-events: none;
-  z-index: 0;
-} */
-
-/* Drifting stars layer */
+/* ---------------------- STAR DRIFT ----------------------- */
 .bgStars {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(
-      rgba(255, 255, 255, 0.2) 1px,
-      transparent 1px
-    ),
-    radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+  background-image:
+    radial-gradient(rgba(255,255,255,0.22) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,0.14) 1px, transparent 1px);
   background-size: 40px 40px, 60px 60px;
-  animation: starDrift 50s linear infinite;
   opacity: 0.18;
+  animation: starDrift 55s linear infinite;
   pointer-events: none;
   z-index: 0;
 }
 
 @keyframes starDrift {
   from { background-position: 0 0, 0 0; }
-  to { background-position: -800px -600px, -400px -200px; }
+  to   { background-position: -800px -600px, -400px -250px; }
 }
 
-/* --------------------- Section Title ---------------------- */
-
+/* --------------------- TITLE ---------------------- */
 .sectionTitle {
   text-align: center;
   font-size: 2.8rem;
   margin-bottom: 4rem;
   position: relative;
-  z-index: 5;
-  text-shadow: 0 0 15px rgba(255, 200, 140, 0.25);
+  z-index: 3;
+  text-shadow: 0 0 16px rgba(255, 200, 140, 0.25);
 }
 
 .sectionTitle::after {
@@ -76,30 +64,31 @@
   height: 4px;
   background: linear-gradient(90deg, #ffd8ac, #ffb778);
   border-radius: 50px;
-  box-shadow: 0 0 10px rgba(255, 180, 100, 0.45);
+  box-shadow: 0 0 12px rgba(255, 180, 100, 0.45);
 }
 
-/* --------------------- Skill Grid ---------------------- */
-
+/* --------------------- GRID ---------------------- */
 .skillsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   gap: 2.5rem;
-  z-index: 5;
   position: relative;
+  z-index: 3;
 }
 
-/* --------------------- Cosmic Orbs ---------------------- */
-
+/* --------------------- SKILL ORB ---------------------- */
 .skillOrb {
   position: relative;
   width: 140px;
   height: 140px;
+  margin: auto;
+
   background: rgba(15, 15, 22, 0.45);
   border-radius: 22px;
-  border: 1px solid rgba(255, 200, 150, 0.08);
+  border: 1px solid rgba(255, 200, 150, 0.1);
+
   box-shadow:
-    0 0 20px rgba(255, 150, 90, 0.08),
+    0 0 18px rgba(255, 150, 90, 0.08),
     inset 0 0 18px rgba(255, 200, 120, 0.06);
 
   display: flex;
@@ -108,44 +97,54 @@
   justify-content: center;
 
   backdrop-filter: blur(10px);
-  transition: 0.5s ease;
   cursor: pointer;
 
   transform-style: preserve-3d;
+  transition:
+    transform 0.45s ease,
+    box-shadow 0.45s ease,
+    border-color 0.45s ease;
 }
 
-/* Orb rotation animation */
+/* hover physics */
 .skillOrb:hover {
-  transform: translateY(-15px) rotate3d(1, 1, 0, 15deg);
+  transform: translateY(-14px) rotateX(10deg) rotateY(-10deg);
   box-shadow:
-    0 0 30px rgba(255, 180, 90, 0.4),
-    0 0 60px rgba(130, 90, 255, 0.25),
-    inset 0 0 25px rgba(255, 200, 120, 0.2);
+    0 0 28px var(--gold-glow),
+    0 0 60px var(--violet-glow),
+    inset 0 0 26px rgba(255, 200, 120, 0.22);
   border-color: rgba(255, 190, 140, 0.35);
 }
 
-/* Orb Core: Floating Crystal */
+/* keyboard accessibility */
+.skillOrb:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px rgba(255, 180, 120, 0.55),
+    0 0 32px rgba(255, 180, 120, 0.35);
+}
+
+/* --------------------- ORB CORE ---------------------- */
 .orbCore {
   font-size: 3.8rem;
-  transition: 0.4s ease;
-  transform: translateZ(25px);
-  filter: drop-shadow(0 0 15px rgba(255, 200, 150, 0.25));
+  transform: translateZ(22px);
+  transition: transform 0.4s ease, filter 0.4s ease;
+  filter: drop-shadow(0 0 14px rgba(255, 200, 150, 0.25));
 }
 
 .skillOrb:hover .orbCore {
-  transform: translateZ(38px) scale(1.15);
-  filter: drop-shadow(0 0 25px rgba(255, 180, 100, 0.55));
+  transform: translateZ(36px) scale(1.15);
+  filter: drop-shadow(0 0 28px rgba(255, 180, 100, 0.55));
 }
 
-/* Text below orb */
+/* --------------------- TEXT ---------------------- */
 .skillName {
   margin-top: 1rem;
   font-size: 1.08rem;
   text-shadow: 0 0 6px rgba(255, 200, 150, 0.25);
 }
 
-/* --------------------- Responsive ---------------------- */
-
+/* --------------------- RESPONSIVE ---------------------- */
 @media (max-width: 576px) {
   .sectionTitle {
     font-size: 2.2rem;
@@ -163,5 +162,19 @@
 
   .orbCore {
     font-size: 3rem;
+  }
+}
+
+/* --------------------- REDUCED MOTION ---------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .skillOrb,
+  .orbCore,
+  .bgStars {
+    transition: none;
+    animation: none;
+  }
+
+  .skillOrb:hover {
+    transform: none;
   }
 }

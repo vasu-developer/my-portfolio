@@ -28,17 +28,6 @@ const projectsData = [
     githubUrl: "https://github.com/vasu-developer/vistavibes",
   },
   {
-    title: "Face Mask Detection",
-    description:
-      "A real-time mask detection system using deep learning (CNN + TensorFlow).",
-    image:
-      "https://miro.medium.com/v2/resize:fit:1400/1*oX3bYkYk7f9b8j4rX6m1cw.png",
-    tags: ["Python", "TensorFlow", "OpenCV"],
-    liveUrl: "https://ai-ml-projects.onrender.com/",
-    githubUrl:
-      "https://github.com/vasu-developer/AI-ML-PROJECTS/tree/main/face-mask-detection",
-  },
-  {
     title: "Email Spam Classifier",
     description: "An NLP-powered spam email classifier.",
     image: project3,

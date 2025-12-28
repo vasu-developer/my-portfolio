@@ -6,30 +6,29 @@
 
 /* ---------------- FOOTER ---------------- */
 .footer {
-  position: fixed;
   bottom: 0;
   left: 0;
-  top: auto;
-  
   width: 100%;
-  z-index: 9999; /* Very high z-index to ensure it is always visible */
-  padding: 4rem 0% 2.5rem; /* Adjusted padding to accommodate fixed position */
+
+  /* HEIGHT CONTROL */
+  min-height: 150px;           /* ~2x header */
+  padding: 1.8rem 6% 1.4rem;   /* reduced padding */
+
   color: var(--cosmic-text);
   text-align: center;
-  
-  /* Background image */
+
+  /* Background */
   background-image: url("/footer-bg-image.png");
-  background-size: cover;
   background-repeat: no-repeat;
-  
-  /* Positions the planet graphic relative to the bottom */
+  background-size: 100% auto;  /* prevents vertical stretching */
   background-position: center bottom;
 
-  /* Smooth reveal */
+  /* Animation */
   opacity: 0;
-  transform: translateY(40px);
-  transition: 1s ease;
-  overflow:visible;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+
+  overflow: hidden;
 }
 
 .visible {
@@ -37,39 +36,27 @@
   transform: translateY(0);
 }
 
-/* Dark gradient overlay for readability and depth */
-/* .overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 10, 0.95),
-    rgba(0, 0, 0, 0.4)
-  );
-  pointer-events: none;
-  z-index: 1;
-} */
+/* ---------------- FOOTER LAYOUT ---------------- */
+.footerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
 /* ---------------- SOCIAL ICONS ---------------- */
 .socialBlock {
-  position: relative;
   display: flex;
-  flex-direction: row;
-  gap: 1.4rem;
-  float: right;
-  align-items: flex-end;
-  margin-top: 2rem;
-  z-index: 5;
-  margin: auto;
-  justify-content: center;
-  bottom: -50px;
-  right: 30px;
+  gap: 1.2rem;
+  align-items: center;
 }
 
 .icon {
-  font-size: 2.2rem;
+  font-size: 2rem;
   color: var(--cosmic-text);
-  padding: 8px;
+  padding: 6px;
   border-radius: 50%;
   transition: 0.25s ease;
 }
@@ -80,40 +67,45 @@
   transform: translateY(-3px);
 }
 
+/* ---------------- VISITOR COUNT ---------------- */
+.visitorCount {
+  font-size: 0.95rem;
+  color: #ffd8b0;
+  text-shadow: 0 0 8px rgba(255, 180, 120, 0.25);
+  white-space: nowrap;
+}
+
+.visitorCount span {
+  font-weight: 700;
+  margin-left: 4px;
+}
+
 /* ---------------- COPYRIGHT ---------------- */
 .copy {
-  margin-top: 3.5rem;
-  font-size: 0.95rem;
+  margin-top: 1.2rem;
+  font-size: 0.9rem;
   color: var(--cosmic-soft);
   letter-spacing: 0.3px;
-  position: relative;
-  z-index: 5;
-  bottom: -30px;
 }
 
 /* ---------------- RESPONSIVE ---------------- */
 @media (max-width: 768px) {
   .footer {
-    padding: 15rem 0% 2.5rem;
+    min-height: 130px;
+    padding: 1.6rem 5% 1.2rem;
   }
-  .socialBlock {
-    align-items: center;
-    margin-right: 0;
-    margin-top: 3rem;
-    background: none;
-  }
-  .icon {
-    font-size: 1.8rem;
-  }
-}
 
-@media (max-width: 500px) {
-  .footer {
-    margin-top: -100px; /* Smaller overlap on mobile */
-    padding: 12rem 0% 2rem;
+  .icon {
+    font-size: 1.7rem;
   }
-  
+
+  .footerRow {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
   .copy {
+    margin-top: 0.8rem;
     font-size: 0.85rem;
   }
 }
