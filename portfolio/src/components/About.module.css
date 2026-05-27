@@ -1,170 +1,233 @@
-/* --------------------- ROOT THEME ---------------------- */
-/* (kept only semantic colors here — scaling comes from index.css) */
+/* src/components/About.module.css */
 
-:root {
-  --nebula-purple: rgba(160, 90, 255, 0.25);
-  --nebula-blue: rgba(70, 120, 255, 0.18);
-  --nebula-red: rgba(255, 150, 90, 0.2);
-
-  --soft-white: #e7e7ef;
-  --glass-dark: rgba(10, 10, 15, 0.55);
-  --accent-warm: #ffd9b2;
-}
-
-/* --------------------- MAIN SECTION ---------------------- */
+/* src/components/About.module.css */
 
 .aboutSection {
   position: relative;
-  padding: calc(7rem * var(--scale-space)) calc(8% * var(--scale-space));
-  color: var(--soft-white);
+  padding: 4.5rem 8% 3.5rem;
+  background-color: var(--bg-secondary);
+  background-image: radial-gradient(rgba(2, 132, 199, 0.08) 1.2px, transparent 1.2px);
+  background-size: 20px 20px;
   overflow: hidden;
   opacity: 0;
-  transform: translateY(calc(40px * var(--scale-ui)));
-  transition: 1.1s ease;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.visible {
+.aboutSection.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* --------------------- SECTION TITLE ---------------------- */
-
-.sectionTitle {
-  text-align: center;
-  font-size: calc(2.8rem * var(--scale-font));
-  margin-bottom: calc(3.8rem * var(--scale-space));
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
   position: relative;
   z-index: 2;
 }
 
-.sectionTitle::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: calc(-12px * var(--scale-ui));
-  transform: translateX(-50%);
-  width: calc(110px * var(--scale-ui));
-  height: calc(3px * var(--scale-ui));
+/* Header Area */
+.headerArea {
+  text-align: center;
+  margin-bottom: 2.25rem;
+}
+
+.tagline {
+  font-family: var(--font-code);
+  font-size: 0.85rem;
+  color: var(--accent-mint);
+  letter-spacing: 2px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.underline {
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-mint), var(--accent-blue));
+  margin: 0.75rem auto 0;
   border-radius: 2px;
-  background: linear-gradient(90deg, #ffddb8, #ffb57c);
-  filter: drop-shadow(0 0 calc(6px * var(--scale-ui)) rgba(255, 180, 90, 0.3));
 }
 
-/* --------------------- CONTENT LAYOUT ---------------------- */
-
-.container {
-  display: flex;
+/* Content Grid */
+.contentGrid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 3rem;
   align-items: center;
-  gap: calc(4rem * var(--scale-space));
-  position: relative;
-  z-index: 4;
 }
 
-.imageWrapper {
-  position: relative;
-  width: calc(320px * var(--scale-ui));
+/* Left Column: Image Card */
+.imageColumn {
+  display: flex;
+  justify-content: center;
 }
 
-/* --------------------- GRAVITY RIPPLE ---------------------- */
+.cardFrame {
+  position: relative;
+  border-radius: 20px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  max-width: 290px;
+  width: 100%;
+  aspect-ratio: 1;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
-.darkMatterRipple {
+.cardFrame:hover {
+  transform: translateY(-5px) rotate(1deg);
+  border-color: var(--accent-mint);
+}
+
+.glassBackground {
   position: absolute;
-  inset: -20%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.05) 0%,
-    transparent 70%
-  );
-  filter: blur(calc(25px * var(--scale-ui)));
-  opacity: 0.35;
-  animation: pulseRipple 6s infinite ease-in-out;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.1) 0%, transparent 75%);
+  pointer-events: none;
 }
-
-@keyframes pulseRipple {
-  0% { transform: scale(0.95); opacity: 0.32; }
-  50% { transform: scale(1.05); opacity: 0.48; }
-  100% { transform: scale(0.95); opacity: 0.32; }
-}
-
-/* --------------------- PROFILE IMAGE ---------------------- */
 
 .profileImage {
   width: 100%;
-  border-radius: 50%;
-  border: calc(4px * var(--scale-ui)) solid rgba(255, 180, 120, 0.3);
-  box-shadow:
-    0 0 calc(25px * var(--scale-ui)) rgba(255, 180, 120, 0.25),
-    0 0 calc(50px * var(--scale-ui)) rgba(100, 70, 255, 0.25);
-  transition: 0.4s ease;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  filter: grayscale(10%) contrast(105%);
 }
 
-.profileImage:hover {
-  transform: scale(1.04);
-  box-shadow:
-    0 0 calc(35px * var(--scale-ui)) rgba(255, 200, 140, 0.45),
-    0 0 calc(70px * var(--scale-ui)) rgba(130, 90, 255, 0.35);
-}
-
-/* --------------------- NEUTRON SHARD ---------------------- */
-
-.neutronShard {
+.glowOverlay {
   position: absolute;
-  right: calc(-20px * var(--scale-ui));
-  bottom: calc(20px * var(--scale-ui));
-  width: calc(34px * var(--scale-ui));
-  height: calc(34px * var(--scale-ui));
-  background: radial-gradient(circle, #ffe9c4, #ffb878 60%, #ff7b00 80%);
-  border-radius: 50%;
-  box-shadow: 0 0 calc(18px * var(--scale-ui)) rgba(255, 150, 60, 0.45);
-  animation: spinShard 8s infinite linear, floatShard 4s infinite ease-in-out;
+  inset: 0;
+  border-radius: 20px;
+  box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.05);
+  pointer-events: none;
 }
 
-@keyframes spinShard {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* Right Column: Text & Stats */
+.textColumn {
+  display: flex;
+  flex-direction: column;
 }
 
-@keyframes floatShard {
-  0% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(calc(-10px * var(--scale-ui))) scale(1.05); }
-  100% { transform: translateY(0) scale(1); }
+.introHeading {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text-primary);
+  margin-bottom: 0.8rem;
 }
 
-/* --------------------- TEXT ---------------------- */
-
-.textBlock {
-  flex: 1;
+.paragraph {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 0.7rem;
 }
 
-.textBlock p {
-  font-size: calc(1.15rem * var(--scale-font));
-  line-height: 1.75;
-  margin-bottom: calc(1.4rem * var(--scale-space));
-  color: var(--soft-white);
-  backdrop-filter: blur(2px);
+/* Stats Badges */
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin-top: 0.85rem;
 }
 
-/* --------------------- RESPONSIVE ---------------------- */
+.statCard {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.75rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: all 0.3s ease;
+}
 
-@media (max-width: 992px) {
-  .container {
-    flex-direction: column;
+.statCard:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.statVal {
+  font-family: var(--font-code);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent-mint);
+  margin-bottom: 0.15rem;
+}
+
+.statLabel {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1024px) {
+  .aboutSection {
+    padding: 7rem 6% 5rem;
+  }
+
+  .contentGrid {
+    gap: 3rem;
+  }
+
+  .introHeading {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .aboutSection {
+    padding: 2.5rem 4% 2rem;
+  }
+
+  .headerArea {
+    margin-bottom: 1.5rem;
+  }
+
+  .contentGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .imageColumn {
+    order: 1; /* Place image below on mobile */
+  }
+
+  .textColumn {
+    order: 0;
     text-align: center;
+    align-items: center;
   }
 
-  .imageWrapper {
-    margin-bottom: calc(2rem * var(--scale-space));
+  .statsGrid {
+    width: 100%;
+  }
+
+  .statCard {
+    align-items: center;
+  }
+
+  .sectionTitle {
+    font-size: 2.1rem;
   }
 }
 
-@media (max-width: 576px) {
-  .sectionTitle {
-    font-size: calc(2.2rem * var(--scale-font));
-  }
-
-  .textBlock p {
-    font-size: calc(1rem * var(--scale-font));
+@media (max-width: 480px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
   }
 }

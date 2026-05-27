@@ -30,7 +30,7 @@ const Header = () => {
     <header className={styles.header}>
       <nav className={styles.navbar}>
         <a href="/" className={styles.logo}>
-          Vasu<sub className={styles.sub}>developer</sub>
+          Vasu<span className={styles.sub}>developer</span>
         </a>
 
         {/* Hamburger Button */}
@@ -55,6 +55,18 @@ const Header = () => {
               }}
             >
               About
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#services"
+              onClick={(e) => {
+                handleNavClick(e, "services");
+                triggerAnimation("services");
+              }}
+            >
+              Services
             </a>
           </li>
 

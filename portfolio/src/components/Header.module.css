@@ -1,156 +1,104 @@
-/* ================= ROOT VARIABLES ================= */
-
-:root {
-  --cosmic-bg: rgba(5, 5, 15, 0.55);
-  --cosmic-border: rgba(255, 180, 90, 0.1);
-  --gold-1: #ffd8b0;
-  --gold-2: #ffb07a;
-  --text-soft: #ddd;
-  --blur-strong: blur(14px);
-}
-
-/* ================= HEADER ================= */
+/* src/components/Header.module.css */
 
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
-  padding: 0.6rem 8%;
-  backdrop-filter: blur(12px);
-  background: var(--cosmic-bg);
-  border-bottom: 1px solid var(--cosmic-border);
+  padding: 1rem 8%;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(240, 246, 252, 0.8);
+  border-bottom: 1px solid var(--border-color);
   z-index: 2000;
-  isolation: isolate;
+  transition: all 0.3s ease;
 }
-
-/* ================= COSMIC GLOW ================= */
-
-.cosmicGlow {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 180, 90, 0.14),
-    rgba(15, 10, 30, 0.55),
-    rgba(0, 0, 0, 0.45)
-  );
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* ================= STAR FIELD ================= */
-
-.starLayer {
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(rgba(255,255,255,.35) 1px, transparent 1px),
-    radial-gradient(rgba(255,255,255,.18) 1px, transparent 1px);
-  background-size: 2px 2px, 3px 3px;
-  background-position: 15% 25%, 75% 65%;
-  opacity: 0.2;
-  animation: cosmicStars 24s linear infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-
-@keyframes cosmicStars {
-  from {
-    background-position: 15% 25%, 75% 65%;
-  }
-  to {
-    background-position: 13% 27%, 73% 67%;
-  }
-}
-
-/* ================= NAVBAR ================= */
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 /* ================= LOGO ================= */
-
 .logo {
-  font-size: 2.2rem;
+  font-size: 1.45rem;
   font-weight: 800;
-  background: linear-gradient(90deg, var(--gold-1), var(--gold-2));
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-blue) 100%);
   -webkit-background-clip: text;
-  color: transparent;
+  -webkit-text-fill-color: transparent;
   text-decoration: none;
-  filter: drop-shadow(0 0 6px rgba(255, 200, 120, 0.18));
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 0.95;
 }
 
 .sub {
-  font-size: 1rem;
+  font-family: var(--font-code);
   font-weight: 600;
-  color: var(--text-soft);
-  margin-left: 0.25rem;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
+  font-size: 0.65rem;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  -webkit-text-fill-color: var(--text-secondary);
+  margin-top: 0.15rem;
 }
 
-.sub:hover {
-  color: #ffcc9c;
-  text-shadow: 0 0 8px rgba(255, 200, 120, 0.35);
-}
-
-/* ================= NAV LINKS ================= */
-
+/* ================= NAV LIST ================= */
 .navList {
   list-style: none;
   display: flex;
-  gap: 2.2rem;
+  gap: 2rem;
   align-items: center;
 }
 
 .navList li a {
   text-decoration: none;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-weight: 500;
-  color: var(--text-soft);
+  color: var(--text-secondary);
   position: relative;
-  transition: color 0.3s ease;
+  transition: color 0.25s ease;
+  font-family: var(--font-main);
+  padding: 0.5rem 0;
 }
 
-/* underline */
+/* Underline Animation */
 .navList li a::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -6px;
+  bottom: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, var(--gold-1), var(--gold-2));
+  background: var(--accent-mint);
   transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.35s ease;
+  transform-origin: right;
+  transition: transform 0.3s ease;
   border-radius: 2px;
 }
 
 .navList li a:hover {
-  color: #ffdab0;
+  color: var(--text-primary);
 }
 
 .navList li a:hover::after {
   transform: scaleX(1);
-}
-
-/* focus accessibility */
-.navList li a:focus-visible {
-  outline: none;
-  color: #ffe2c2;
+  transform-origin: left;
 }
 
 /* ================= HAMBURGER ================= */
-
 .menuButton {
   display: none;
   flex-direction: column;
   justify-content: space-between;
-  width: 28px;
-  height: 20px;
+  width: 24px;
+  height: 18px;
   background: none;
   border: none;
   cursor: pointer;
@@ -159,27 +107,31 @@
 }
 
 .menuButton span {
-  height: 3px;
+  height: 2px;
   width: 100%;
-  background: #e6e6e6;
+  background: var(--text-primary);
   border-radius: 2px;
-  transition: transform 0.35s ease, opacity 0.25s ease;
+  transition: transform 0.3s ease, opacity 0.2s ease;
 }
 
-/* open state */
 .menuButton.open span:nth-child(1) {
   transform: rotate(45deg) translate(5px, 5px);
 }
+
 .menuButton.open span:nth-child(2) {
   opacity: 0;
 }
+
 .menuButton.open span:nth-child(3) {
-  transform: rotate(-45deg) translate(6px, -6px);
+  transform: rotate(-45deg) translate(5px, -6px);
 }
 
-/* ================= MOBILE ================= */
-
+/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
+  .header {
+    padding: 1rem 6%;
+  }
+
   .menuButton {
     display: flex;
   }
@@ -188,43 +140,37 @@
     position: absolute;
     top: 100%;
     left: 0;
-    right: 0;
+    width: 100%;
     flex-direction: column;
     align-items: center;
-
-    background: rgba(5, 5, 15, 0.92);
-    backdrop-filter: var(--blur-strong);
-
+    background: rgba(240, 246, 252, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-color);
     max-height: 0;
     overflow: hidden;
     padding: 0;
-    transition:
-      max-height 0.45s ease,
-      padding 0.3s ease;
-    border-bottom: 1px solid var(--cosmic-border);
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    gap: 1.5rem;
   }
 
   .navList.showMenu {
-    max-height: 340px;
-    padding: 1.6rem 0;
+    max-height: 300px;
+    padding: 2rem 0;
   }
 
   .navList li {
-    padding: 0.6rem 0;
+    width: 100%;
+    text-align: center;
   }
 
   .navList li a {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
+    display: inline-block;
+    width: 100%;
   }
-}
 
-/* ================= REDUCED MOTION ================= */
-
-@media (prefers-reduced-motion: reduce) {
-  .starLayer,
-  .navList,
-  .menuButton span {
-    animation: none;
-    transition: none;
+  .navList li a::after {
+    display: none; /* remove underlines on mobile dropdown for clean look */
   }
 }

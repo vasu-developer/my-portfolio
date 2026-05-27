@@ -1,13 +1,10 @@
+// src/components/Footer.jsx
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./Footer.module.css";
-import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
-
-import { db } from "../firebase/firebase";
-import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
+import { FaGithub, FaLinkedin, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
   const [visible, setVisible] = useState(false);
-  const [visitors, setVisitors] = useState(null);
   const ref = useRef(null);
 
   /* Reveal animation */
@@ -23,31 +20,25 @@ const Footer = () => {
     );
 
     if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
   }, []);
 
-  /* 🔥 VISITOR COUNTER */
-  useEffect(() => {
-    const countVisitor = async () => {
-      try {
-        const visitorRef = doc(db, "stats", "visitors");
-        const snap = await getDoc(visitorRef);
+  const handleNavClick = (e, targetId) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    if (!targetElement) return;
 
-        if (!snap.exists()) {
-          await setDoc(visitorRef, { count: 1 });
-          setVisitors(1);
-        } else {
-          await updateDoc(visitorRef, {
-            count: increment(1),
-          });
-          setVisitors(snap.data().count + 1);
-        }
-      } catch (err) {
-        console.error("Visitor counter error:", err);
-      }
-    };
+    const header = document.querySelector("header");
+    const headerHeight = header ? header.offsetHeight : 0;
+    const targetPosition = targetElement.offsetTop - headerHeight;
 
-    countVisitor();
-  }, []);
+    window.scrollTo({
+      top: targetPosition,
+      behavior: "smooth",
+    });
+
+    window.dispatchEvent(new Event(`trigger-${targetId}-animation`));
+  };
 
   return (
     <footer
@@ -55,49 +46,130 @@ const Footer = () => {
       ref={ref}
       className={`${styles.footer} ${visible ? styles.visible : ""}`}
     >
-      <div className={styles.overlay} />
+      <div className={styles.container}>
+        <div className={styles.footerTop}>
+          {/* LEFT: Branding Column */}
+          <div className={styles.brandCol}>
+            <span className={styles.trustTag}>✓ YOUR TRUSTED DEVELOPMENT PARTNER</span>
+            <a href="/" className={styles.logo}>
+              Vasu<span className={styles.sub}>developer</span>
+            </a>
+            <p className={styles.brandDesc}>
+              Delivering high-performance, secure, and conversion-optimized web and mobile systems built to scale your business.
+            </p>
+            <div className={styles.socialBlock}>
+              <a
+                href="https://github.com/vasu-developer"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.icon}
+                title="GitHub"
+              >
+                <FaGithub />
+              </a>
 
-      <div className={styles.footerRow}>
-        {/* LEFT: Socials */}
-        <div className={styles.socialBlock}>
-          <a
-            href="https://github.com/vasu-developer"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.icon}
-          >
-            <FaGithub />
-          </a>
+              <a
+                href="https://linkedin.com/in/vasu-developer"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.icon}
+                title="LinkedIn"
+              >
+                <FaLinkedin />
+              </a>
 
-          <a
-            href="https://linkedin.com/in/vasu-developer"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.icon}
-          >
-            <FaLinkedin />
-          </a>
+              <a
+                href="https://instagram.com/vasu_developer"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.icon}
+                title="Instagram"
+              >
+                <FaInstagram />
+              </a>
 
-          <a
-            href="https://instagram.com/vasu_developer"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.icon}
-          >
-            <FaInstagram />
-          </a>
+              <a
+                href="https://wa.me/919528539285"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.icon}
+                title="Chat on WhatsApp"
+              >
+                <FaWhatsapp />
+              </a>
+            </div>
+          </div>
+
+          {/* RIGHT: Two columns (Links & Services) */}
+          <div className={styles.linksWrapper}>
+            <div className={styles.col}>
+              <h4 className={styles.colTitle}>Quick Links</h4>
+              <ul className={styles.colLinks}>
+                <li>
+                  <a href="#about" onClick={(e) => handleNavClick(e, "about")}>
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a href="#services" onClick={(e) => handleNavClick(e, "services")}>
+                    Services
+                  </a>
+                </li>
+                <li>
+                  <a href="#skills" onClick={(e) => handleNavClick(e, "skills")}>
+                    Skills
+                  </a>
+                </li>
+                <li>
+                  <a href="#projects" onClick={(e) => handleNavClick(e, "projects")}>
+                    Projects
+                  </a>
+                </li>
+                <li>
+                  <a href="#contact" onClick={(e) => handleNavClick(e, "contact")}>
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div className={styles.col}>
+              <h4 className={styles.colTitle}>Services</h4>
+              <ul className={styles.colLinks}>
+                <li>
+                  <a href="#services" onClick={(e) => handleNavClick(e, "services")}>
+                    Web Development
+                  </a>
+                </li>
+                <li>
+                  <a href="#services" onClick={(e) => handleNavClick(e, "services")}>
+                    Android Apps
+                  </a>
+                </li>
+                <li>
+                  <a href="#services" onClick={(e) => handleNavClick(e, "services")}>
+                    Custom UI Design
+                  </a>
+                </li>
+                <li>
+                  <a href="#services" onClick={(e) => handleNavClick(e, "services")}>
+                    Blogs & CMS
+                  </a>
+                </li>
+                <li>
+                  <a href="#services" onClick={(e) => handleNavClick(e, "services")}>
+                    Admin Panels
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
 
-        {/* RIGHT: Visitor Count */}
+        <p className={styles.copy}>
+          © {new Date().getFullYear()} Vasudev Verma • Crafting High-Performance Web & Mobile Solutions
+        </p>
       </div>
-
-      <p className={styles.copy}>
-        © {new Date().getFullYear()} Vasudev Verma • Exploring Beyond.
-        <div className={styles.visitorCount}>
-         Visitors&nbsp;
-          <span>{visitors !== null ? visitors : "..."}</span>
-        </div>
-      </p>
     </footer>
   );
 };

@@ -1,13 +1,36 @@
-
 :root {
-  /* Colors */
-  --primary-color: #4f9cff;
-  --secondary-color: #1e1e1e;
-  --background-color: #121212;
-  --text-color: #e5e5e5;
+  /* Color Palette - Light Blue variant theme (Saffron + Sky Blue + Yellow + Dark text) */
+  --bg-primary: #f3f7fc;      /* Ice-Blue tint background */
+  --bg-secondary: #e8eff7;    /* Lighter sky-blue section backdrop */
+  --bg-card: rgba(255, 255, 255, 0.85);
+  
+  --accent-saffron: #ea580c;  /* Saffron Orange (primary CTAs, brand logo) */
+  --accent-saffron-glow: rgba(234, 88, 12, 0.08);
+  --accent-skyblue: #0284c7;  /* Sky Blue (secondary highlights, tech titles) */
+  --accent-skyblue-glow: rgba(2, 132, 199, 0.08);
+  --accent-yellow: #d97706;   /* Golden Amber (achievements, rating stars) */
+  --accent-yellow-glow: rgba(217, 119, 6, 0.08);
+
+  /* Map old selectors to new color variables for seamless layout updating */
+  --accent-mint: var(--accent-saffron);
+  --accent-mint-glow: var(--accent-saffron-glow);
+  --accent-blue: var(--accent-skyblue);
+  --accent-blue-glow: var(--accent-skyblue-glow);
+  
+  --text-primary: #0f172a;    /* Slate-900 for readable text */
+  --text-secondary: #475569;  /* Slate-600 for paragraph body */
+  --border-color: rgba(15, 23, 42, 0.09);
+
+  /* Legacy aliases to keep basic components compatible during refactor */
+  --primary-color: var(--accent-mint);
+  --secondary-color: var(--bg-secondary);
+  --background-color: var(--bg-primary);
+  --text-color: var(--text-primary);
 
   /* Typography */
-  --font-main: 'Poppins', sans-serif;
+  --font-main: 'Inter', sans-serif;
+  --font-display: 'Playfair Display', serif;
+  --font-code: 'JetBrains Mono', monospace;
 
   /* GLOBAL SCALE CONTROLS */
   --scale-font: 1;
@@ -44,16 +67,19 @@ body {
    GLOBAL TYPOGRAPHY
 ----------------------------------------------------- */
 h1 {
+  font-family: var(--font-display);
   font-size: calc(3rem * var(--scale-font));
   font-weight: 700;
 }
 
 h2 {
+  font-family: var(--font-display);
   font-size: calc(2.4rem * var(--scale-font));
   font-weight: 600;
 }
 
 h3 {
+  font-family: var(--font-display);
   font-size: calc(1.6rem * var(--scale-font));
   font-weight: 600;
 }

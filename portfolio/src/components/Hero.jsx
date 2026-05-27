@@ -1,160 +1,196 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+// src/components/Hero.jsx
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import useTypingEffect from "../hooks/useTypingEffect";
 import styles from "./Hero.module.css";
-import useStarfield from "../hooks/useStarField";
-const STAR_COUNT = 90;
-const INFALL_PARTICLES = 40;
+import { FaLaptopCode, FaMobileAlt, FaServer, FaCheckCircle, FaChevronRight } from "react-icons/fa";
 
 export default function Hero() {
   const phrases = [
-  " Full Stack Developer",
-  " React Enthusiast",
-  " Open Source Contributor",
-];
+    " Full Stack Developer",
+    " Freelance Engineer",
+    " React Native Specialist",
+    " MERN Architect",
+  ];
 
-const [phraseIndex, setPhraseIndex] = useState(0);
-const typedText = useTypingEffect(phrases[phraseIndex], 130);
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const typedText = useTypingEffect(phrases[phraseIndex], 80);
+  const [activeTab, setActiveTab] = useState("web");
 
-useEffect(() => {
-  if (typedText === phrases[phraseIndex]) {
-    const t = setTimeout(() => {
-      setPhraseIndex((prev) => (prev + 1) % phrases.length);
-    }, 1500);
-    return () => clearTimeout(t);
-  }
-}, [typedText, phraseIndex]);
-
-  // motion values (no React state)
-  const mx = useMotionValue(0.5);
-  const my = useMotionValue(0.5);
-
-  // pointer handler uses motion values directly — NO setState
   useEffect(() => {
-    const handler = (e) => {
-      const w = window.innerWidth || 1;
-      const h = window.innerHeight || 1;
-      mx.set(e.clientX / w);
-      my.set(e.clientY / h);
-    };
-    window.addEventListener("pointermove", handler, { passive: true });
-    return () => window.removeEventListener("pointermove", handler);
-  }, [mx, my]);
-
-  // transforms for parallax (passed to motion.divs)
-  const sunX = useTransform(mx, [0, 1], [15, -15]);
-  const sunY = useTransform(my, [0, 1], [10, -10]);
-
-  const holeX = useTransform(mx, [0, 1], [-12, 12]);
-  const holeY = useTransform(my, [0, 1], [-6, 6]);
-
-  const orbitX = useTransform(mx, [0, 1], [8, -8]);
-  const orbitY = useTransform(my, [0, 1], [5, -5]);
-
-  // stable star nodes (memoized so they don't regenerate unnecessarily)
-  const stars = useStarfield(STAR_COUNT);
-
-  // stable infall particles (memoized)
-  const particles = useMemo(() => {
-    return Array.from({ length: INFALL_PARTICLES }).map((_, i) => {
-      const angle = Math.random() * Math.PI * 2;
-      const radius = 160 + Math.random() * 80;
-      const size = Math.random() * 2 + 1;
-      const duration = 6 + Math.random() * 4;
-      return (
-        <div
-          key={`p-${i}`}
-          className={styles.infallParticle}
-          style={{
-            ["--startX"]: `${Math.cos(angle) * radius}px`,
-            ["--startY"]: `${Math.sin(angle) * radius}px`,
-            ["--duration"]: `${duration}s`,
-            width: `${size}px`,
-            height: `${size}px`,
-          }}
-          aria-hidden
-        />
-      );
-    });
-  }, []);
+    if (typedText === phrases[phraseIndex]) {
+      const t = setTimeout(() => {
+        setPhraseIndex((prev) => (prev + 1) % phrases.length);
+      }, 2000);
+      return () => clearTimeout(t);
+    }
+  }, [typedText, phraseIndex]);
 
   return (
-    <section id="hero" className={styles.hero} ref={useRef(null)}>
-      {/* STATIC STARFIELD (position: fixed in CSS) */}
-       <div className={styles.starfield}>
-      {stars.map((s) => (
-        <div
-          key={s.id}
-          className={styles.star}
-          style={{
-            left: `${s.left}%`,
-            top: `${s.top}%`,
-            width: `${s.size}px`,
-            height: `${s.size}px`,
-            animationDelay: `${s.delay}s`,
-            animationDuration: `${s.duration}s`,
-          }}
-        />
-      ))}
-    </div>
+    <section id="hero" className={styles.hero}>
+      <div className={styles.gridOverlay}></div>
 
-      {/* SUN (parallax via motion values) */}
-      <motion.div
-        className={styles.sunLayer}
-        style={{ x: sunX, y: sunY }}
-        aria-hidden
-      >
-        <div className={styles.sunGlow} />
-        <div className={styles.sunCore} />
-      </motion.div>
+      <div className={styles.container}>
+        {/* LEFT COLUMN: Hero content */}
+        <div className={styles.heroContent}>
+          <div className={styles.badge}>
+            <span className={styles.badgePulse}></span>
+            Available for Freelance Projects
+          </div>
 
-      {/* BLACK HOLE (opposite parallax) */}
-      <motion.div
-        className={styles.blackHoleLayer}
-        style={{ x: holeX, y: holeY }}
-        aria-hidden
-      >
-        <div className={styles.blackHoleCore} />
-        <div className={styles.blackHoleMask} />
-        <div className={styles.infallGroup}>{particles}</div>
-      </motion.div>
+          <h1 className={styles.title}>
+            Building Scalable <br />
+            <span className={styles.gradientText}>Digital Experiences</span>
+          </h1>
 
-      {/* PLANETS — light parallax */}
-      <motion.div
-        className={styles.orbitSystem}
-        style={{ x: orbitX, y: orbitY }}
-        aria-hidden
-      >
-        <div className={styles.bigPlanet} />
-        <div className={styles.smallOrbit} style={{ animationDuration: "14s" }}>
-          <div className={styles.smallPlanet} />
+          <p className={styles.subtitle}>
+            Hi, I'm Vasudev Verma. I'm a <span className={styles.typingText}>{typedText}</span>
+          </p>
+
+          <p className={styles.description}>
+            I craft responsive full-stack web applications and cross-platform Android/iOS apps 
+            that deliver high performance, seamless user flows, and sleek brand aesthetics.
+          </p>
+
+          <div className={styles.ctaGroup}>
+            <a href="#contact" className={styles.ctaPrimary}>
+              Get in Touch <FaChevronRight className={styles.ctaIcon} />
+            </a>
+            <a href="#projects" className={styles.ctaSecondary}>
+              View Work
+            </a>
+          </div>
         </div>
-        <div className={styles.smallOrbit} style={{ animationDuration: "20s" }}>
-          <div className={`${styles.smallPlanet} ${styles.orangePlanet}`} />
+
+        {/* RIGHT COLUMN: Interactive Tech Mockup Showcase */}
+        <div className={styles.showcaseWrapper}>
+          <div className={styles.mockupContainer}>
+            {/* Header / Window Controls */}
+            <div className={styles.mockupHeader}>
+              <div className={styles.windowControls}>
+                <span className={styles.closeBtn}></span>
+                <span className={styles.minBtn}></span>
+                <span className={styles.maxBtn}></span>
+              </div>
+              <div className={styles.mockupTitle}>vasu_developer_workspace</div>
+            </div>
+
+            {/* Tab Selectors */}
+            <div className={styles.mockupTabs}>
+              <button
+                onClick={() => setActiveTab("web")}
+                className={`${styles.tabBtn} ${activeTab === "web" ? styles.activeTab : ""}`}
+              >
+                <FaLaptopCode className={styles.tabIcon} /> Web Apps
+              </button>
+              <button
+                onClick={() => setActiveTab("mobile")}
+                className={`${styles.tabBtn} ${activeTab === "mobile" ? styles.activeTab : ""}`}
+              >
+                <FaMobileAlt className={styles.tabIcon} /> Mobile Apps
+              </button>
+              <button
+                onClick={() => setActiveTab("backend")}
+                className={`${styles.tabBtn} ${activeTab === "backend" ? styles.activeTab : ""}`}
+              >
+                <FaServer className={styles.tabIcon} /> APIs & DB
+              </button>
+            </div>
+
+            {/* Simulated Content Window */}
+            <div className={styles.mockupContent}>
+              <AnimatePresence mode="wait">
+                {activeTab === "web" && (
+                  <motion.div
+                    key="web"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25 }}
+                    className={styles.webPreview}
+                  >
+                    <div className={styles.webHeader}>
+                      <span className={styles.webDot}></span>
+                      <span className={styles.webBar}></span>
+                    </div>
+                    <div className={styles.webBody}>
+                      <div className={styles.webHeroSim}>
+                        <div className={styles.simTitle}>MERN Stack SaaS</div>
+                        <div className={styles.simText}>Stripe Payments & Auth</div>
+                        <div className={styles.simBtn}>Launch App</div>
+                      </div>
+                      <div className={styles.webMetricsSim}>
+                        <div className={styles.simMetricCard}>
+                          <span className={styles.metricVal}>99.8%</span>
+                          <span className={styles.metricLabel}>Lighthouse</span>
+                        </div>
+                        <div className={styles.simMetricCard}>
+                          <span className={styles.metricVal}>&lt; 100ms</span>
+                          <span className={styles.metricLabel}>API Response</span>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {activeTab === "mobile" && (
+                  <motion.div
+                    key="mobile"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25 }}
+                    className={styles.mobilePreview}
+                  >
+                    <div className={styles.phoneFrame}>
+                      <div className={styles.phoneNotch}></div>
+                      <div className={styles.phoneScreen}>
+                        <div className={styles.phoneHeader}>
+                          <span>Dashboard</span>
+                          <span className={styles.phoneAvatar}></span>
+                        </div>
+                        <div className={styles.phoneChartSim}>
+                          <div className={styles.phoneBar1} style={{ height: "45%" }}></div>
+                          <div className={styles.phoneBar2} style={{ height: "75%" }}></div>
+                          <div className={styles.phoneBar3} style={{ height: "55%" }}></div>
+                          <div className={styles.phoneBar4} style={{ height: "90%" }}></div>
+                        </div>
+                        <div className={styles.phoneCardSim}>
+                          <span className={styles.phoneCardTitle}>React Native App</span>
+                          <span className={styles.phoneCardText}>Real-time WebSockets ready</span>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {activeTab === "backend" && (
+                  <motion.div
+                    key="backend"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25 }}
+                    className={styles.terminalPreview}
+                  >
+                    <div className={styles.terminalLine}><span className={styles.tGreen}>$</span> npm run start:dev</div>
+                    <div className={styles.terminalLog}><span className={styles.tGray}>[Nest] 10244 - </span><span className={styles.tCyan}>LOG</span> [NestApplication] Nest application successfully started</div>
+                    <div className={styles.terminalLog}><span className={styles.tGray}>[DB] </span><span className={styles.tGreen}>SUCCESS</span> Connected to MongoDB Atlas Cluster</div>
+                    <div className={styles.terminalLog}><span className={styles.tGray}>[DB] </span><span className={styles.tGreen}>SUCCESS</span> Synced 14 tables in PostgreSQL</div>
+                    <div className={styles.terminalLine}><span className={styles.tGreen}>$</span> curl -X GET /api/v1/analytics</div>
+                    <div className={styles.terminalResponse}>
+                      {"{"}
+                      <div style={{ paddingLeft: "15px" }}>"status": "online",</div>
+                      <div style={{ paddingLeft: "15px" }}>"db_latency": "14ms",</div>
+                      <div style={{ paddingLeft: "15px" }}>"active_freelance_clients": 6</div>
+                      {"}"}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
-        <div className={styles.smallOrbit} style={{ animationDuration: "26s" }}>
-          <div className={`${styles.smallPlanet} ${styles.bluePlanet}`} />
-        </div>
-      </motion.div>
-
-      {/* Hero content — intentionally NOT parallaxed */}
-      <div className={styles.heroContent} role="main">
-        <h1 className={styles.title}>
-          Hi, I'm <span className={styles.name}>Vasudev Verma</span>
-        </h1>
-
-        <p className={styles.subtitle}>
-          I'm a <span className={styles.typingText}>{typedText}</span>
-        </p>
-
-        <p className={styles.description}>
-          I create with the hope that every line of code brings me closer —
-          not just to better software, but to the finest version of myself.
-        </p>
-
-        <a href="#contact" className={styles.ctaButton}>
-          Reach Out
-        </a>
       </div>
     </section>
   );

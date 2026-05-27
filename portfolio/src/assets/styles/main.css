@@ -1,15 +1,30 @@
 /* src/index.css */
 
 /* Import the Poppins font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-/* CSS Variables for easy theming */
 :root {
-  --primary-color: #4f9cff;       
-  --secondary-color: #1e1e1e;    
-  --background-color: #121212;    
-  --text-color: #e5e5e5;          
-  --font-main: 'Poppins', sans-serif;
+  --bg-primary: #f3f7fc;      /* Ice-Blue tint background */
+  --bg-secondary: #e8eff7;    /* Lighter sky-blue section backdrop */
+  --bg-card: rgba(255, 255, 255, 0.85);
+  
+  --accent-saffron: #ea580c;
+  --accent-skyblue: #0284c7;
+  
+  --accent-mint: var(--accent-saffron);
+  --accent-blue: var(--accent-skyblue);
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --border-color: rgba(15, 23, 42, 0.09);
+
+  --primary-color: var(--accent-mint);
+  --secondary-color: var(--bg-secondary);
+  --background-color: var(--bg-primary);
+  --text-color: var(--text-primary);
+  --font-main: 'Inter', sans-serif;
+  --font-display: 'Playfair Display', serif;
+  --font-code: 'JetBrains Mono', monospace;
 }
 
 
