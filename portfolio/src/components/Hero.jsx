@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import { motion } from "framer-motion";
+import resumePdf from "../assets/resume/Resume-20July.pdf";
 
 const ThreeDScene = React.lazy(() => import("./ThreeDScene"));
 
@@ -55,7 +56,7 @@ export default function Hero() {
           <motion.div variants={itemVariants} className="flex items-center space-x-2">
             <span className="h-[1px] w-6 bg-blue-600"></span>
             <span className="font-sans text-[12px] text-blue-600 uppercase tracking-wider font-semibold">
-              SOFTWARE ENGINEER
+              VASUDEV VERMA &bull; SOFTWARE ENGINEER
             </span>
           </motion.div>
 
@@ -74,7 +75,7 @@ export default function Hero() {
             variants={itemVariants}
             className="max-w-lg text-[16px] md:text-[18px] text-slate-600 leading-relaxed font-normal"
           >
-            From REST APIs to product customization systems, I enjoy building software that is clean, scalable, and intuitive.
+            I am a full-stack engineer and mobile developer, recognized online as <strong className="font-semibold text-slate-900">vasu_developer</strong>. I build production MERN applications, React Native Android/iOS apps, and custom 3D web configurations.
           </motion.p>
 
           {/* Action Buttons */}
@@ -87,7 +88,7 @@ export default function Hero() {
               View Projects
             </a>
             <a
-              href="/resume.pdf"
+              href={resumePdf}
               target="_blank"
               rel="noopener noreferrer"
               className="px-5 py-3 border border-slate-200 hover:border-slate-300 text-sm font-sans font-semibold tracking-wide rounded-lg text-slate-800 transition-all duration-200"

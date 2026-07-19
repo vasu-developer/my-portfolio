@@ -24,6 +24,9 @@ export default function Footer() {
           <p className="text-xs text-slate-500 font-normal font-mono">
             Built with React, Three.js, and a focus on thoughtful engineering.
           </p>
+          <p className="text-[10px] text-slate-450 font-normal">
+            &copy; {new Date().getFullYear()} Vasudev Verma (vasu_developer). All rights reserved.
+          </p>
         </div>
 
         {/* Social Icons Links */}
