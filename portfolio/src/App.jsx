@@ -11,6 +11,7 @@ import Projects from "./components/Projects";
 import Timeline from "./components/Timeline";
 import Achievements from "./components/Achievements";
 import Education from "./components/Education";
+import GameZone from "./components/GameZone";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
@@ -30,6 +31,7 @@ function App() {
         <Timeline />
         <Achievements />
         <Education />
+        <GameZone />
         <Contact />
       </main>
       <Footer />

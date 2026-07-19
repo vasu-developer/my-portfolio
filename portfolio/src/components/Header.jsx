@@ -19,6 +19,7 @@ export default function Header() {
     { label: "Services", href: "#services" },
     { label: "Experience", href: "#experience" },
     { label: "Projects", href: "#projects" },
+    { label: "Playground", href: "#games" },
     { label: "Contact", href: "#contact" },
   ];
 
