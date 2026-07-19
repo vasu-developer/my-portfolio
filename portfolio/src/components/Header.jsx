@@ -1,114 +1,128 @@
-// src/components/Header.jsx
-import React, { useState } from "react";
-import styles from "./Header.module.css";
+import React, { useState, useEffect } from "react";
 
-const Header = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
+export default function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const handleNavClick = (e, targetId) => {
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const menuItems = [
+    { label: "About", href: "#about" },
+    { label: "Highlights", href: "#highlights" },
+    { label: "Skills", href: "#skills" },
+    { label: "Services", href: "#services" },
+    { label: "Experience", href: "#experience" },
+    { label: "Projects", href: "#projects" },
+    { label: "Contact", href: "#contact" },
+  ];
+
+  const handleNavClick = (e, href) => {
     e.preventDefault();
-    const targetElement = document.getElementById(targetId);
-    if (!targetElement) return;
+    const targetElement = document.querySelector(href);
+    if (targetElement) {
+      const offset = 80; // height of floating header
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - offset;
 
-    const header = document.querySelector("header");
-    const headerHeight = header ? header.offsetHeight : 0;
-    const targetPosition = targetElement.offsetTop - headerHeight;
-
-    window.scrollTo({
-      top: targetPosition,
-      behavior: "smooth",
-    });
-
-    setMenuOpen(false);
-  };
-
-  const triggerAnimation = (section) => {
-    window.dispatchEvent(new Event(`trigger-${section}-animation`));
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+    setMobileMenuOpen(false);
   };
 
   return (
-    <header className={styles.header}>
-      <nav className={styles.navbar}>
-        <a href="/" className={styles.logo}>
-          Vasu<span className={styles.sub}>developer</span>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white/80 border-b border-slate-200/50 backdrop-blur-premium py-4"
+          : "bg-transparent py-6"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        {/* Brand Logo */}
+        <a
+          href="#"
+          onClick={(e) => handleNavClick(e, "#")}
+          className="font-sans text-xl tracking-tight text-slate-900 hover:text-blue-600 transition-colors duration-200 font-extrabold"
+        >
+          vasu<span className="font-signature text-blue-600 font-normal italic lowercase">_developer</span>
         </a>
 
-        {/* Hamburger Button */}
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center space-x-8">
+          {menuItems.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              onClick={(e) => handleNavClick(e, item.href)}
+              className="text-[13px] font-sans font-medium text-slate-600 hover:text-blue-600 transition-colors duration-200"
+            >
+              {item.label}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            onClick={(e) => handleNavClick(e, "#contact")}
+            className="px-4 py-1.5 border border-slate-200 hover:border-slate-350 text-[13px] font-sans font-medium text-slate-800 rounded-lg transition-colors duration-200"
+          >
+            Get in Touch
+          </a>
+        </nav>
+
+        {/* Mobile Menu Button */}
         <button
-          className={`${styles.menuButton} ${menuOpen ? styles.open : ""}`}
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="md:hidden flex flex-col justify-between w-5 h-4 focus:outline-none"
           aria-label="Toggle Menu"
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <span
+            className={`h-[1px] w-full bg-slate-900 transition-transform duration-200 ${
+              mobileMenuOpen ? "rotate-45 translate-y-[7.5px]" : ""
+            }`}
+          ></span>
+          <span
+            className={`h-[1px] w-full bg-slate-900 transition-opacity duration-200 ${
+              mobileMenuOpen ? "opacity-0" : ""
+            }`}
+          ></span>
+          <span
+            className={`h-[1px] w-full bg-slate-900 transition-transform duration-200 ${
+              mobileMenuOpen ? "-rotate-45 -translate-y-[7.5px]" : ""
+            }`}
+          ></span>
         </button>
+      </div>
 
-        {/* Navigation List */}
-        <ul className={`${styles.navList} ${menuOpen ? styles.showMenu : ""}`}>
-          <li>
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-x-0 top-[60px] bg-white border-b border-slate-200 p-6 flex flex-col space-y-6 md:hidden shadow-lg shadow-slate-100/50">
+          {menuItems.map((item) => (
             <a
-              href="#about"
-              onClick={(e) => {
-                handleNavClick(e, "about");
-                triggerAnimation("about");
-              }}
+              key={item.label}
+              href={item.href}
+              onClick={(e) => handleNavClick(e, item.href)}
+              className="text-sm font-sans font-medium text-slate-600 hover:text-blue-600 transition-colors duration-200"
             >
-              About
+              {item.label}
             </a>
-          </li>
-
-          <li>
-            <a
-              href="#services"
-              onClick={(e) => {
-                handleNavClick(e, "services");
-                triggerAnimation("services");
-              }}
-            >
-              Services
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#skills"
-              onClick={(e) => {
-                handleNavClick(e, "skills");
-                triggerAnimation("skills");
-              }}
-            >
-              Skills
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#projects"
-              onClick={(e) => {
-                handleNavClick(e, "projects");
-                triggerAnimation("projects");
-              }}
-            >
-              Projects
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#contact"
-              onClick={(e) => {
-                handleNavClick(e, "contact");
-                triggerAnimation("contact");
-              }}
-            >
-              Contact
-            </a>
-          </li>
-        </ul>
-      </nav>
+          ))}
+          <a
+            href="#contact"
+            onClick={(e) => handleNavClick(e, "#contact")}
+            className="w-full text-center py-2.5 border border-slate-200 text-sm font-sans font-medium text-slate-800 rounded-lg hover:border-slate-300"
+          >
+            Get in Touch
+          </a>
+        </div>
+      )}
     </header>
   );
-};
-
-export default Header;
+}

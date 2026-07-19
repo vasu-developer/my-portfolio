@@ -1,196 +1,148 @@
-// src/components/Hero.jsx
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import useTypingEffect from "../hooks/useTypingEffect";
-import styles from "./Hero.module.css";
-import { FaLaptopCode, FaMobileAlt, FaServer, FaCheckCircle, FaChevronRight } from "react-icons/fa";
+import React, { Suspense } from "react";
+import { motion } from "framer-motion";
+
+const ThreeDScene = React.lazy(() => import("./ThreeDScene"));
 
 export default function Hero() {
-  const phrases = [
-    " Full Stack Developer",
-    " Freelance Engineer",
-    " React Native Specialist",
-    " MERN Architect",
-  ];
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
 
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const typedText = useTypingEffect(phrases[phraseIndex], 80);
-  const [activeTab, setActiveTab] = useState("web");
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
 
-  useEffect(() => {
-    if (typedText === phrases[phraseIndex]) {
-      const t = setTimeout(() => {
-        setPhraseIndex((prev) => (prev + 1) % phrases.length);
-      }, 2000);
-      return () => clearTimeout(t);
+  const handleScrollToProjects = (e) => {
+    e.preventDefault();
+    const target = document.querySelector("#projects");
+    if (target) {
+      const offset = 80;
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - offset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
     }
-  }, [typedText, phraseIndex]);
+  };
 
   return (
-    <section id="hero" className={styles.hero}>
-      <div className={styles.gridOverlay}></div>
+    <section className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden bg-white">
+      <div className="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center z-10">
+        
+        {/* Left Typography Block */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="lg:col-span-7 flex flex-col justify-center space-y-5 text-left"
+        >
+          {/* Subtle Accent Tag */}
+          <motion.div variants={itemVariants} className="flex items-center space-x-2">
+            <span className="h-[1px] w-6 bg-blue-600"></span>
+            <span className="font-sans text-[12px] text-blue-600 uppercase tracking-wider font-semibold">
+              SOFTWARE ENGINEER
+            </span>
+          </motion.div>
 
-      <div className={styles.container}>
-        {/* LEFT COLUMN: Hero content */}
-        <div className={styles.heroContent}>
-          <div className={styles.badge}>
-            <span className={styles.badgePulse}></span>
-            Available for Freelance Projects
-          </div>
+          {/* Main Hero Header */}
+          <motion.h1 
+            variants={itemVariants}
+            className="text-[38px] sm:text-[52px] md:text-[64px] font-extrabold tracking-tighter leading-[1.08] text-slate-900 font-display"
+          >
+            Building modern web applications with{" "}
+            <span className="font-signature text-blue-600 font-normal">thoughtful</span> engineering and{" "}
+            <span className="font-signature text-slate-400 font-normal">immersive</span> 3D experiences.
+          </motion.h1>
 
-          <h1 className={styles.title}>
-            Building Scalable <br />
-            <span className={styles.gradientText}>Digital Experiences</span>
-          </h1>
+          {/* Hero Paragraph */}
+          <motion.p 
+            variants={itemVariants}
+            className="max-w-lg text-[16px] md:text-[18px] text-slate-600 leading-relaxed font-normal"
+          >
+            From REST APIs to product customization systems, I enjoy building software that is clean, scalable, and intuitive.
+          </motion.p>
 
-          <p className={styles.subtitle}>
-            Hi, I'm Vasudev Verma. I'm a <span className={styles.typingText}>{typedText}</span>
-          </p>
-
-          <p className={styles.description}>
-            I craft responsive full-stack web applications and cross-platform Android/iOS apps 
-            that deliver high performance, seamless user flows, and sleek brand aesthetics.
-          </p>
-
-          <div className={styles.ctaGroup}>
-            <a href="#contact" className={styles.ctaPrimary}>
-              Get in Touch <FaChevronRight className={styles.ctaIcon} />
+          {/* Action Buttons */}
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-1">
+            <a
+              href="#projects"
+              onClick={handleScrollToProjects}
+              className="px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white text-sm font-sans font-semibold tracking-wide rounded-lg transition-all duration-200 shadow-sm"
+            >
+              View Projects
             </a>
-            <a href="#projects" className={styles.ctaSecondary}>
-              View Work
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-3 border border-slate-200 hover:border-slate-300 text-sm font-sans font-semibold tracking-wide rounded-lg text-slate-800 transition-all duration-200"
+            >
+              Download Resume
             </a>
-          </div>
-        </div>
+          </motion.div>
 
-        {/* RIGHT COLUMN: Interactive Tech Mockup Showcase */}
-        <div className={styles.showcaseWrapper}>
-          <div className={styles.mockupContainer}>
-            {/* Header / Window Controls */}
-            <div className={styles.mockupHeader}>
-              <div className={styles.windowControls}>
-                <span className={styles.closeBtn}></span>
-                <span className={styles.minBtn}></span>
-                <span className={styles.maxBtn}></span>
+          {/* Core Stats Grid */}
+          <motion.div 
+            variants={itemVariants}
+            className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-slate-100"
+          >
+            <div>
+              <div className="text-[24px] font-sans text-slate-900 font-bold">1+</div>
+              <div className="text-[12px] text-slate-400 font-sans mt-1 uppercase tracking-wider leading-tight font-medium">
+                Years Professional<br/>Experience
               </div>
-              <div className={styles.mockupTitle}>vasu_developer_workspace</div>
             </div>
-
-            {/* Tab Selectors */}
-            <div className={styles.mockupTabs}>
-              <button
-                onClick={() => setActiveTab("web")}
-                className={`${styles.tabBtn} ${activeTab === "web" ? styles.activeTab : ""}`}
-              >
-                <FaLaptopCode className={styles.tabIcon} /> Web Apps
-              </button>
-              <button
-                onClick={() => setActiveTab("mobile")}
-                className={`${styles.tabBtn} ${activeTab === "mobile" ? styles.activeTab : ""}`}
-              >
-                <FaMobileAlt className={styles.tabIcon} /> Mobile Apps
-              </button>
-              <button
-                onClick={() => setActiveTab("backend")}
-                className={`${styles.tabBtn} ${activeTab === "backend" ? styles.activeTab : ""}`}
-              >
-                <FaServer className={styles.tabIcon} /> APIs & DB
-              </button>
+            <div>
+              <div className="text-[24px] font-sans text-slate-900 font-bold">4+</div>
+              <div className="text-[12px] text-slate-400 font-sans mt-1 uppercase tracking-wider leading-tight font-medium">
+                Production<br/>Applications
+              </div>
             </div>
-
-            {/* Simulated Content Window */}
-            <div className={styles.mockupContent}>
-              <AnimatePresence mode="wait">
-                {activeTab === "web" && (
-                  <motion.div
-                    key="web"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.25 }}
-                    className={styles.webPreview}
-                  >
-                    <div className={styles.webHeader}>
-                      <span className={styles.webDot}></span>
-                      <span className={styles.webBar}></span>
-                    </div>
-                    <div className={styles.webBody}>
-                      <div className={styles.webHeroSim}>
-                        <div className={styles.simTitle}>MERN Stack SaaS</div>
-                        <div className={styles.simText}>Stripe Payments & Auth</div>
-                        <div className={styles.simBtn}>Launch App</div>
-                      </div>
-                      <div className={styles.webMetricsSim}>
-                        <div className={styles.simMetricCard}>
-                          <span className={styles.metricVal}>99.8%</span>
-                          <span className={styles.metricLabel}>Lighthouse</span>
-                        </div>
-                        <div className={styles.simMetricCard}>
-                          <span className={styles.metricVal}>&lt; 100ms</span>
-                          <span className={styles.metricLabel}>API Response</span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-
-                {activeTab === "mobile" && (
-                  <motion.div
-                    key="mobile"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.25 }}
-                    className={styles.mobilePreview}
-                  >
-                    <div className={styles.phoneFrame}>
-                      <div className={styles.phoneNotch}></div>
-                      <div className={styles.phoneScreen}>
-                        <div className={styles.phoneHeader}>
-                          <span>Dashboard</span>
-                          <span className={styles.phoneAvatar}></span>
-                        </div>
-                        <div className={styles.phoneChartSim}>
-                          <div className={styles.phoneBar1} style={{ height: "45%" }}></div>
-                          <div className={styles.phoneBar2} style={{ height: "75%" }}></div>
-                          <div className={styles.phoneBar3} style={{ height: "55%" }}></div>
-                          <div className={styles.phoneBar4} style={{ height: "90%" }}></div>
-                        </div>
-                        <div className={styles.phoneCardSim}>
-                          <span className={styles.phoneCardTitle}>React Native App</span>
-                          <span className={styles.phoneCardText}>Real-time WebSockets ready</span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-
-                {activeTab === "backend" && (
-                  <motion.div
-                    key="backend"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.25 }}
-                    className={styles.terminalPreview}
-                  >
-                    <div className={styles.terminalLine}><span className={styles.tGreen}>$</span> npm run start:dev</div>
-                    <div className={styles.terminalLog}><span className={styles.tGray}>[Nest] 10244 - </span><span className={styles.tCyan}>LOG</span> [NestApplication] Nest application successfully started</div>
-                    <div className={styles.terminalLog}><span className={styles.tGray}>[DB] </span><span className={styles.tGreen}>SUCCESS</span> Connected to MongoDB Atlas Cluster</div>
-                    <div className={styles.terminalLog}><span className={styles.tGray}>[DB] </span><span className={styles.tGreen}>SUCCESS</span> Synced 14 tables in PostgreSQL</div>
-                    <div className={styles.terminalLine}><span className={styles.tGreen}>$</span> curl -X GET /api/v1/analytics</div>
-                    <div className={styles.terminalResponse}>
-                      {"{"}
-                      <div style={{ paddingLeft: "15px" }}>"status": "online",</div>
-                      <div style={{ paddingLeft: "15px" }}>"db_latency": "14ms",</div>
-                      <div style={{ paddingLeft: "15px" }}>"active_freelance_clients": 6</div>
-                      {"}"}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+            <div>
+              <div className="text-[24px] font-sans text-slate-900 font-bold">15+</div>
+              <div className="text-[12px] text-slate-400 font-sans mt-1 uppercase tracking-wider leading-tight font-medium">
+                Production Features<br/>Delivered
+              </div>
             </div>
-          </div>
+            <div>
+              <div className="text-[24px] font-sans text-slate-900 font-bold">10+</div>
+              <div className="text-[12px] text-slate-400 font-sans mt-1 uppercase tracking-wider leading-tight font-medium">
+                Core<br/>Technologies
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Right 3D Visual Block */}
+        <div className="lg:col-span-5 w-full h-full flex justify-center items-center">
+          <Suspense fallback={
+            <div className="w-10 h-10 border-2 border-blue-600/20 border-t-blue-600 rounded-full animate-spin"></div>
+          }>
+            <ThreeDScene />
+          </Suspense>
         </div>
+      </div>
+
+      {/* Decorative vertical coordinates overlay */}
+      <div className="absolute right-8 bottom-8 hidden md:block select-none pointer-events-none">
+        <span className="font-mono text-[10px] text-slate-300 tracking-widest vertical-rl">
+          LAT 28.6139° N / LONG 77.2090° E
+        </span>
       </div>
     </section>
   );

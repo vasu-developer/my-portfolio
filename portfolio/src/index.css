@@ -1,233 +1,65 @@
-:root {
-  /* Color Palette - Light Blue variant theme (Saffron + Sky Blue + Yellow + Dark text) */
-  --bg-primary: #f3f7fc;      /* Ice-Blue tint background */
-  --bg-secondary: #e8eff7;    /* Lighter sky-blue section backdrop */
-  --bg-card: rgba(255, 255, 255, 0.85);
-  
-  --accent-saffron: #ea580c;  /* Saffron Orange (primary CTAs, brand logo) */
-  --accent-saffron-glow: rgba(234, 88, 12, 0.08);
-  --accent-skyblue: #0284c7;  /* Sky Blue (secondary highlights, tech titles) */
-  --accent-skyblue-glow: rgba(2, 132, 199, 0.08);
-  --accent-yellow: #d97706;   /* Golden Amber (achievements, rating stars) */
-  --accent-yellow-glow: rgba(217, 119, 6, 0.08);
+@import "tailwindcss";
 
-  /* Map old selectors to new color variables for seamless layout updating */
-  --accent-mint: var(--accent-saffron);
-  --accent-mint-glow: var(--accent-saffron-glow);
-  --accent-blue: var(--accent-skyblue);
-  --accent-blue-glow: var(--accent-skyblue-glow);
-  
-  --text-primary: #0f172a;    /* Slate-900 for readable text */
-  --text-secondary: #475569;  /* Slate-600 for paragraph body */
-  --border-color: rgba(15, 23, 42, 0.09);
-
-  /* Legacy aliases to keep basic components compatible during refactor */
-  --primary-color: var(--accent-mint);
-  --secondary-color: var(--bg-secondary);
-  --background-color: var(--bg-primary);
-  --text-color: var(--text-primary);
-
-  /* Typography */
-  --font-main: 'Inter', sans-serif;
-  --font-display: 'Playfair Display', serif;
-  --font-code: 'JetBrains Mono', monospace;
-
-  /* GLOBAL SCALE CONTROLS */
-  --scale-font: 1;
-  --scale-space: 1;
-  --scale-ui: 1;
+@theme {
+  --color-bg-light: #f8fafc;
+  --color-surface-light: #ffffff;
+  --color-primary-dark: #0f172a;
+  --color-secondary-slate: #64748b;
+  --color-accent-blue: #2563eb;
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Geist", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-signature: "Playfair Display", serif;
 }
 
-/* -----------------------------------------------------
-   RESET
------------------------------------------------------ */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* -----------------------------------------------------
-   BASE DOCUMENT
------------------------------------------------------ */
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: var(--font-main);
-  background-color: var(--background-color);
-  color: var(--text-color);
-  line-height: 1.6;
-  font-size: calc(16px * var(--scale-font));
-  overflow-x: hidden;
-}
-
-/* -----------------------------------------------------
-   GLOBAL TYPOGRAPHY
------------------------------------------------------ */
-h1 {
-  font-family: var(--font-display);
-  font-size: calc(3rem * var(--scale-font));
-  font-weight: 700;
-}
-
-h2 {
-  font-family: var(--font-display);
-  font-size: calc(2.4rem * var(--scale-font));
-  font-weight: 600;
-}
-
-h3 {
-  font-family: var(--font-display);
-  font-size: calc(1.6rem * var(--scale-font));
-  font-weight: 600;
-}
-
-p {
-  font-size: calc(1rem * var(--scale-font));
-}
-
-/* Links & Buttons */
-a,
-button {
-  font-size: calc(1rem * var(--scale-font));
-  font-family: inherit;
-}
-
-/* -----------------------------------------------------
-   GLOBAL LAYOUT HELPERS
------------------------------------------------------ */
-section {
-  padding: calc(6rem * var(--scale-space)) 8%;
-  position: relative;
-}
-
-header {
-  padding: calc(1rem * var(--scale-space)) 6%;
-}
-
-footer {
-  padding: calc(4rem * var(--scale-space)) 6% calc(2.5rem * var(--scale-space));
-}
-
-/* -----------------------------------------------------
-   GLOBAL ANIMATIONS
------------------------------------------------------ */
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* -----------------------------------------------------
-   SCROLLBAR (MODERN)
------------------------------------------------------ */
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--secondary-color);
+  background: #f8fafc;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-color);
-  border-radius: 4px;
+  background: #e2e8f0;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #4aabee;
+  background: #2563eb;
 }
 
-/* =====================================================
-   TABLET VIEW (≤ 1024px)
-   ===================================================== */
-@media (max-width: 1024px) {
-  :root {
-    --scale-font: 0.9;
-    --scale-space: 0.85;
-    --scale-ui: 0.9;
-  }
-
-  section {
-    padding: calc(5rem * var(--scale-space)) 6%;
-  }
-
-  header {
-    padding: calc(0.8rem * var(--scale-space)) 5%;
-  }
-
-  footer {
-    padding: calc(3.5rem * var(--scale-space)) 5% calc(2rem * var(--scale-space));
-  }
+/* HTML Reset / Utilities */
+html {
+  scroll-behavior: smooth;
+  background-color: #f8fafc;
 }
 
-/* =====================================================
-   MOBILE VIEW (≤ 768px)
-   ===================================================== */
-@media (max-width: 768px) {
-  :root {
-    --scale-font: 0.82;
-    --scale-space: 0.75;
-    --scale-ui: 0.8;
-  }
-
-  section {
-    padding: calc(4.5rem * var(--scale-space)) 4%;
-  }
-
-  header {
-    padding: calc(0.7rem * var(--scale-space)) 4%;
-  }
-
-  footer {
-    padding: calc(3rem * var(--scale-space)) 4% calc(1.8rem * var(--scale-space));
-  }
-
-  button {
-    padding: 0.6rem 1.2rem;
-  }
+body {
+  background-color: #f8fafc;
+  color: #0f172a;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* =====================================================
-   SMALL MOBILE (≤ 480px)
-   ===================================================== */
-@media (max-width: 480px) {
-  :root {
-    --scale-font: 0.75;
-    --scale-space: 0.7;
-    --scale-ui: 0.75;
-  }
-
-  h1 {
-    font-size: 1.8rem;
-  }
-
-  h2 {
-    font-size: 1.6rem;
-  }
-
-  h3 {
-    font-size: 1.25rem;
-  }
-
-  footer {
-    padding: 2.5rem 4% 1.5rem;
-  }
+/* Custom text selection colors */
+::selection {
+  background-color: rgba(37, 99, 235, 0.1);
+  color: #0f172a;
 }
 
-/* =====================================================
-   ACCESSIBILITY & PERFORMANCE
-   ===================================================== */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-  }
+/* Premium Card Layout utility */
+.card-premium {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.05);
+  border-radius: 12px;
+}
+
+/* Chrome-like blur background helper */
+.backdrop-blur-premium {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
